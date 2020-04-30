@@ -1,4 +1,81 @@
-\begin{enumerate}[label={Aufgabe H\arabic*},start=60]
+\begin{enumerate}[label={Aufgabe Ü\arabic*},start=1]
     \item 
+    	\begin{enumerate}[label={\alph*.}]
+    		\item Ein DIN A4 Blatt hat die Größe:
+	    		\begin{equation}
+	    			\left(\SI{21}{\centi\meter} \times \SI{29.7}{\centi\meter}\right) = 
+	    			\left(\frac{\SI{21}{\centi\meter}}{\SI{2.54}{\centi\meter\per\inch}} \times \frac{\SI{29.7}{\centi\meter}}{\SI{2.54}{\centi\meter\per\inch}}\right) = \left(\SI{8,27}{\inch} \times \SI{11,69}{\inch}\right)
+	    		\end{equation}
+	    		Das ergibt sich insgesamt:
+	    		\begin{align}
+	    			\text{Anzahl Pixels} &= \left(\SI{8,27}{\inch} \times \SI{1200}{\pixel\per\inch}\right) \times \left(\SI{11,69}{\inch} \times \SI{1200}{\pixel\per\inch}\right) \notag \\
+	    			&= \left(\num{9924} \times \num{14028}\right)\si{\pixel} \label{eqn:pixelrange} \\
+	    			&= \SI{139213872}{\pixel} \\
+	    			\text{Anzahl Bits} &= \SI{139213872}{\pixel} \times \left(3 \times \SI{8}{\bit}\right) \notag \\
+	    			&= \SI{3341132928}{\bit}
+	    		\end{align}
+
+	    		\begin{enumerate}[label={(\roman*)}]
+	    			\item Mit Wireless LAN (IEEE 802.11n) mit \SI[per-mode=symbol]{600}{\mega\bit\per\second}:
+		    			\begin{equation}
+		    				\text{Zeit} = \SI{3341.132928}{\mega\bit} \div \SI{600}{\mega\bit\per\second} = \SI{5,57}{\second} \sigfig{3}
+		    			\end{equation}
+	    			\item Mit Ethernet mit \SI[per-mode=symbol]{1}{\giga\bit\per\second}:
+		    			\begin{equation}
+		    				\text{Zeit} = \SI{3.341132928}{\giga\bit} \div \SI{1}{\giga\bit\per\second} = \SI{3,34}{\second} \sigfig{3}
+		    			\end{equation}
+	    		\end{enumerate}
+	    	\item 
+	    		\begin{enumerate}
+	    			\item Aus \eqref{eqn:pixelrange} gibt es \num{9924} möglichen horizontalen Koordinaten und \num{14028} möglichen vertikalen Koordinaten.
+		    			\begin{align*}
+		    				\ceil*{\log_2 9924} = 14 && \ceil*{\log_2 14028} = 14
+		    			\end{align*}
+		    			\SI{14}{\bit} sind deshalb jeweils für die horizontalen und vertikalen Koordinaten nötig, was insgesamt \SI{28}{\bit} bedeutet.
+
+		    		\item $\text{Bits Insgesamt} = 100 \times 1800 \times \left(28 + 16\right) \si{\bit} = \SI{7920000}{\bit}$
+		    			\begin{enumerate}
+			    			\item Mit Wireless LAN (IEEE 802.11n) mit \SI[per-mode=symbol]{600}{\mega\bit\per\second}:
+				    			\begin{equation}
+				    				\text{Zeit} = \SI{7.92}{\mega\bit} \div \SI{600}{\mega\bit\per\second} = \SI{0,0132}{\second} \nks{4}
+				    			\end{equation}
+			    			\item Mit Ethernet mit \SI[per-mode=symbol]{1}{\giga\bit\per\second}:
+				    			\begin{equation}
+				    				\text{Zeit} = \SI{7.92e-3}{\giga\bit} \div \SI{1}{\giga\bit\per\second} = \SI{0,0079}{\second} \nks{4}
+				    			\end{equation}
+			    		\end{enumerate}
+	    		\end{enumerate}
+    	\end{enumerate}
+    \item \blanko
+    	\begin{multicols}{2}
+	    	\begin{enumerate}[label={\alph*.}]
+	    		\item \blanko
+	    			\begin{center}
+	    				\ttfamily
+	    				\begin{tabular}{lrrr}
+	    					\toprule
+	    					DEC & BIN & OCT & HEX \\
+	    					\midrule
+	    					17  & 10001    & 021  & 0x11 \\
+	    					42  & 101010   & 052  & 0x2A \\
+	    					255 & 11111111 & 0377 & 0xFF \\
+	    					\bottomrule
+	    				\end{tabular}
+	    			\end{center}
+	    		\item \blanko
+	    			\begin{center}
+	    				\ttfamily
+	    				\begin{tabular}{lrrr}
+	    					\toprule
+	    					BIN & DEC & OCT & HEX \\
+	    					\midrule
+	    					10001111 & 143 & 0217 & 0x8F \\
+	    					11010101 & 213 & 0325 & 0xD5 \\
+	    					00011110 & 30  & 036  & 0x1E \\
+	    					\bottomrule
+	    				\end{tabular}
+	    			\end{center}
+	    	\end{enumerate}
+	    \end{multicols}
     \item Sehen Sie bitte \texttt{u01-ue03.txt}
 \end{enumerate}

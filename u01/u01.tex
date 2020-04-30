@@ -25,6 +25,19 @@
 \usepackage{dashrule}
 \usepackage{minted}
 \usepackage{bookmark}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{
+    locale = DE,
+    per-mode=fraction,
+    fraction-function=\tfrac
+}
+
+% https://github.com/mitchpaulus/siunitxext/blob/master/siunitxext.sty
+\DeclareSIUnit\inch{in}
+\DeclareSIUnit\in{in}
+\DeclareSIUnit\pixel{pixel}
+\DeclareSIUnit\pix{pixel}
 
 \usepackage[version=0.96]{pgf}
 \usepackage{tikz}
@@ -110,11 +123,16 @@
 \def\nrub{1}
 \newcommand{\blanko}[0]{\textcolor{white}{.}}
 \newcommand{\makeset}[1]{\left\{\,#1\,\right\}}
+\newcommand*{\sigfig}[1]{\hspace{0.5cm}\text{(#1 sig. Zif.)}}
+\newcommand*{\nks}[1]{\hspace{0.5cm}\text{(#1 Nks.)}}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+% https://tex.stackexchange.com/a/42274/116525
 
 \usepackage{hyperref}
 \hypersetup{
 	pdftitle={Rechnerarchitektur (SS20) Übungsblatt \nrub ~- 12141043},
-	pdfauthor={Yudong SUn},
+	pdfauthor={Yudong Sun},
 	bookmarksnumbered=true,
 	bookmarksopen=true,
 	bookmarksopenlevel=2,
@@ -139,7 +157,7 @@
 \fancyhead[RE]{Übungsblatt \nrub}
 \cfoot{\thepage}
 
-\title{Betriebsysteme (WS19/20)\\Übungsblatt \nrub}
+\title{Rechnerarchitektur (SS20)\\Übungsblatt \nrub}
 \author{Yudong Sun\\\texttt{12141043}}
 \date{\today}
 
