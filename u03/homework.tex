@@ -1,0 +1,140 @@
+\let\not\overline
+\let\nor\downarrow
+\newcommand{\xor}[2]{\not{#1}#2 \lor #1\not{#2}}
+\begin{enumerate}[label={Aufgabe Ü\arabic*},start=4]
+    \item 
+    	\begin{enumerate}[label={\alph*.}]
+    		\item Gegeben sei $g(a,b,c) = a \lor \bar{b} \lor (a \land c)$.
+    			\begin{center}
+    				\ttfamily
+    				\begin{tabular}{lll | r}
+    					\toprule
+    					$a$ & $b$ & $c$ & $g$ \\
+    					\midrule
+    					0 & 0 & 0 & 1\\
+    					0 & 0 & 1 & 1\\
+    					0 & 1 & 0 & 0\\
+    					0 & 1 & 1 & 0\\
+    					1 & 0 & 0 & 1\\
+    					1 & 0 & 1 & 1\\
+    					1 & 1 & 0 & 1\\
+    					1 & 1 & 1 & 1\\
+    					\bottomrule
+    				\end{tabular}
+    			\end{center}
+    			\vspace{1em}
+    		\item \blanko
+    			\vspace{-1.8\baselineskip}
+    			% Solve with K - Map
+    			\begin{flalign}
+    				f_1(A,B,C) &= \not{(A \lor B \lor C)} &&\\
+    				f_2(A,B,C) &= C\left(\not{\xor{A}{B}}\right) \lor \not{C}\left(\xor{A}{B}\right) && \\
+    				f_3(A,B,C) &= \not{B} && \\
+    				f_4(A,B,C) &= B\not{C} && \\
+    				f_5(A,B,C) &= A \not{A} && \\
+    				f_6(A,B,C) &= C 
+    			\end{flalign}
+    		\item Aus der De-Morgansche Regeln lässt sich das logische \texttt{NOR} als $a \nor b = \not{a \lor b} = \not{a} \land \not{b}$ ausgedrückt werden. Nach Idempotenz von $\lor$ ist $a = a \lor a$ und folglich $\not{a} = \not{a \lor a} = a \nor a$.
+    			\begin{align*}
+    				h(a,b,c) = (a \land b) \lor c &= \left(\not{\not{a}} \land \not{\not{b}}\right) \lor c = \left(\not{a} \nor \not{b}\right) \lor c \\
+    				&= \not{\not{\left(\not{a} \nor \not{b}\right) \lor c}} = \not{\left(\not{a} \nor \not{b}\right) \nor c}\\
+    				&= \not{\left(\left[a \nor a\right] \nor \left[b \nor b\right]\right) \nor c} \\
+    				&= \left[\left(\left[a \nor a\right] \nor \left[b \nor b\right]\right) \nor c\right] \nor \left[\left(\left[a \nor a\right] \nor \left[b \nor b\right]\right) \nor c\right]
+    			\end{align*}
+    	\end{enumerate}
+    \item \label{auf:mux}
+    	Wir erstellen zunächst drei Wahrheitstabelle zu diesem Multiplexer, indem wir die Zeilen so ordnen, dass eine Spalte aus 1 Block von 4 Nullen und 1 Block von 4 Einsen entsteht. $F$ in diesem Fall bedeutet die Ausgabe des Multiplexers.
+    	\begin{multicols}{3}
+	    	\begin{center}
+	    		\ttfamily
+	    		\begin{tabular}{ccc|c}
+	    			\toprule
+	    			$I_0$ & $I_1$ & $S$ & $F$ \\
+	    			\midrule
+	    			\textcolor{red}{0} & 0 & 0 & 0 \\
+					\textcolor{red}{0} & 0 & 1 & 0 \\
+					\textcolor{red}{0} & 1 & 0 & 0 \\
+					\textcolor{red}{0} & 1 & 1 & 1 \\
+					\rowcolor{SpringGreen} \textcolor{red}{1} & 0 & 0 & 1 \\
+					\rowcolor{SpringGreen} \textcolor{red}{1} & 0 & 1 & 0 \\
+					\textcolor{red}{1} & 1 & 0 & 1 \\
+					\textcolor{red}{1} & 1 & 1 & 1 \\
+	    			\bottomrule
+	    		\end{tabular}
+			\end{center}
+			\begin{center}
+	    		\ttfamily
+	    		\begin{tabular}{ccc|c}
+	    			\toprule
+	    			$I_0$ & $I_1$ & $S$ & $F$ \\
+	    			\midrule
+	    			0 & \textcolor{red}{0} & 0 & 0 \\
+					0 & \textcolor{red}{0} & 1 & 0 \\
+					1 & \textcolor{red}{0} & 0 & 1 \\
+					1 & \textcolor{red}{0} & 1 & 0 \\
+					\rowcolor{yellow} 0 & \textcolor{red}{1} & 0 & 0 \\
+					\rowcolor{yellow} 0 & \textcolor{red}{1} & 1 & 1 \\
+					\rowcolor{yellow} 1 & \textcolor{red}{1} & 0 & 1 \\
+					\rowcolor{yellow} 1 & \textcolor{red}{1} & 1 & 1 \\
+	    			\bottomrule
+	    		\end{tabular}
+			\end{center}
+			\begin{center}
+	    		\ttfamily
+	    		\begin{tabular}{ccc|c}
+	    			\toprule
+	    			$I_0$ & $I_1$ & $S$ & $F$ \\
+	    			\midrule
+	    			0 & 0 & \textcolor{red}{0} & 0 \\
+					1 & 0 & \textcolor{red}{0} & 1 \\
+					0 & 1 & \textcolor{red}{0} & 0 \\
+					1 & 1 & \textcolor{red}{0} & 1 \\
+					0 & 0 & \textcolor{red}{1} & 0 \\
+					0 & 1 & \textcolor{red}{1} & 1 \\
+					1 & 0 & \textcolor{red}{1} & 0 \\
+					1 & 1 & \textcolor{red}{1} & 1 \\
+	    			\bottomrule
+	    		\end{tabular}
+			\end{center}
+	    \end{multicols}
+	    Die gelbe Zeile entsprechen die gewünschte Wahrheitstabelle zur \ref{auf:mux}\ref{auf:aub}
+	    \begin{multicols}{2}
+	    	\noindent
+	    	\begin{enumerate}[label={\alph*.}]
+	    		\item \label{auf:aub} \blanko
+		    		\begin{center}
+		    			% https://tex.stackexchange.com/a/428172
+		    			\begin{tikzpicture}
+		    				\node[draw, minimum width=1cm, minimum height=2cm] (mux) {};
+		    				% Input
+		    				\draw[{Latex}-] ($(mux.west)+(0,0.5)$) -- ($(mux.west)+(-1.5,0.5)$) node[above right] {A};
+		    				\draw[{Latex}-] ($(mux.west)+(0,-0.5)$) -- ($(mux.west)+(-1.5,-0.5)$) node[above right] {1};
+
+		    				% Control
+		    				\draw[{Latex}-] (mux.south) -- ($(mux)+(0,-2)$) node[above right] {B};
+
+		    				% Output
+		    				\draw[-{Latex}] (mux.east) --  ($(mux)+(1.5,0)$) node[above] {A $\lor$ B};
+		    			\end{tikzpicture}
+		    		\end{center}
+		    	\item \blanko
+		    		\label{auf:nota}
+		    		\begin{center}
+		    			% https://tex.stackexchange.com/a/428172
+		    			\begin{tikzpicture}
+		    				\node[draw, minimum width=1cm, minimum height=2cm] (mux) {};
+		    				% Input
+		    				\draw[{Latex}-] ($(mux.west)+(0,0.5)$) -- ($(mux.west)+(-1.5,0.5)$) node[above right] {1};
+		    				\draw[{Latex}-] ($(mux.west)+(0,-0.5)$) -- ($(mux.west)+(-1.5,-0.5)$) node[above right] {0};
+
+		    				% Control
+		    				\draw[{Latex}-] (mux.south) -- ($(mux)+(0,-2)$) node[above right] {A};
+
+		    				% Output
+		    				\draw[-{Latex}] (mux.east) --  ($(mux)+(1.5,0)$) node[above] {$\not{\text{A}}$};
+		    			\end{tikzpicture}
+		    		\end{center}
+	    	\end{enumerate}
+	    \end{multicols}
+    \item Sehen Sie bitte \texttt{u02-ue06.txt}
+\end{enumerate}
