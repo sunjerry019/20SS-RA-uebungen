@@ -1,3 +1,5 @@
+\def\nrub{3}
+
 \RequirePackage{currfile}
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -23,7 +25,7 @@
 \usepackage[binary-units=true]{siunitx} 	% Provides good units
 \usepackage{nicefrac}
 \usepackage{dashrule}
-\usepackage{minted}
+% \usepackage{minted}
 \usepackage{bookmark}
 \usepackage{icomma}
 \usepackage{siunitx}
@@ -45,6 +47,22 @@
 
 \usepackage{csquotes}
 \MakeOuterQuote{"}
+
+% https://texfaq.org/FAQ-twooptarg
+    % \usepackage{xargs}
+    % \usepackage{etoolbox} % https://tex.stackexchange.com/a/53079
+    % \usepackage{ifthen}
+    % \newboolean{default}
+    % \newcommand{\case}{}
+    % \newcommand{\default}{}
+
+    % \newenvironment{switch}[1]{%
+    %     \setboolean{default}{true}
+    %     \renewcommand{\case}[2]{\ifthenelse{\equal{#1}{##1}}{%
+    %         \setboolean{default}{false}##2}{}}%
+    %     \renewcommand{\default}[1]{\ifthenelse{\boolean{default}}{##1}{}}
+    % }{}
+% https://tex.stackexchange.com/a/349350
 
 % http://packages.oth-regensburg.de/ctan/macros/latex/contrib/currfile/currfile.pdf
 % % https://tex.stackexchange.com/a/54891/116525
@@ -120,7 +138,6 @@
 }
 % https://tex.stackexchange.com/a/300130
 
-\def\nrub{2}
 \newcommand{\blanko}[0]{\textcolor{white}{.}}
 \newcommand{\makeset}[1]{\left\{\,#1\,\right\}}
 \newcommand*{\sigfig}[1]{\hspace{0.5cm}\text{(#1 sig. Zif.)}}
