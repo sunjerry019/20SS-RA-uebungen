@@ -1,0 +1,114 @@
+\let\not\overline
+\let\nor\downarrow
+\newcommand{\xor}[2]{\not{#1}#2 \lor #1\not{#2}}
+
+\begin{enumerate}[label={Aufgabe Ü\arabic*},start=7]
+    \item \blanko
+    	\begin{center}
+    		\begin{tikzpicture}
+    			% AND Block
+    				% Boxes
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (0-0) {2};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (1-0) [below =of 0-0] {3};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (2-0) [below =of 1-0] {0};
+
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (0-1) [right =of 0-0] {3};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (1-1) [below =of 0-1] {2};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (2-1) [below =of 1-1] {3};
+
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (0-2) [right =of 0-1] {0};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (1-2) [below =of 0-2] {2};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (2-2) [below =of 1-2] {2};
+
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (0-3) [right =of 0-2] {0};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (1-3) [below =of 0-3] {0};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (2-3) [below =of 1-3] {3};
+
+		    		% Arrows
+		    		\draw[{Latex}-] (0-0.north) -- ($(0-0)+(0,1)$) node[above] (nestart) {$1$};
+		    		\draw[{Latex}-] (0-1.north) -- ($(0-1)+(0,1)$) node[above] {$1$};
+		    		\draw[{Latex}-] (0-2.north) -- ($(0-2)+(0,1)$) node[above] {$1$};
+		    		\draw[{Latex}-] (0-3.north) -- ($(0-3)+(0,1)$) node[above] (neend) {$1$};
+
+		    		\draw[{Latex}-] (0-0.west) -- ($(0-0)+(-2,0)$) node[above] {$x$};
+						\draw[-{Latex}] (0-0.east) -- node[above] {$x$} (0-1.west);
+						\draw[-{Latex}] (0-1.east) -- node[above] {$x$} (0-2.west);
+						\draw[-{Latex}] (0-2.east) -- node[above] {$x$} (0-3.west);
+						\draw[-{Latex}] (0-3.east) -- node[right] {$~~x$} ($(0-3)+(1,0)$);
+					\draw[{Latex}-] (1-0.west) -- ($(1-0)+(-2,0)$) node[above] {$y$};
+						\draw[-{Latex}] (1-0.east) -- node[above] {$y$} (1-1.west);
+						\draw[-{Latex}] (1-1.east) -- node[above] {$y$} (1-2.west);
+						\draw[-{Latex}] (1-2.east) -- node[above] {$y$} (1-3.west);
+						\draw[-{Latex}] (1-3.east) -- node[right] {$~~y$} ($(1-3)+(1,0)$);
+					\draw[{Latex}-] (2-0.west) -- ($(2-0)+(-2,0)$) node[above] {$z$};
+						\draw[-{Latex}] (2-0.east) -- node[above] {$z$} (2-1.west);
+						\draw[-{Latex}] (2-1.east) -- node[above] {$z$} (2-2.west);
+						\draw[-{Latex}] (2-2.east) -- node[above] {$z$} (2-3.west);
+						\draw[-{Latex}] (2-3.east) -- node[right] {$~~z$} ($(2-3)+(1,0)$);
+
+				% OR Block
+					\node[draw, minimum width=1cm, minimum height=1cm] (3-0) [below =of 2-0] {1};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (4-0) [below =of 3-0] {0};
+
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (3-1) [below =of 2-1] {1};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (4-1) [below =of 3-1] {0};
+
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (3-2) [below =of 2-2] {0};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (4-2) [below =of 3-2] {1};
+
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (3-3) [below =of 2-3] {0};
+		    		\node[draw, minimum width=1cm, minimum height=1cm] (4-3) [below =of 3-3] {1};
+
+		    		\draw[{Latex}-] (3-0.west) -- ($(3-0)+(-1,0)$) node[left] (gsestart) {$0$};
+		    		\draw[{Latex}-] (4-0.west) -- ($(4-0)+(-1,0)$) node[left] (gseend) {$0$};
+
+				% Down Arrows
+					\draw[-{Latex}] (0-0.south) -- node[right] {$x$} (1-0.north);
+					\draw[-{Latex}] (1-0.south) -- node[right] {$x\not{y}$} (2-0.north);
+					\draw[-{Latex}] (2-0.south) -- node[right] {$x\not{y}$} (3-0.north);
+					\draw[-{Latex}] (3-0.south) -- node[right] {$x\not{y}$} (4-0.north);
+					\draw[-{Latex}] (4-0.south) -- ($(4-0)+(0,-1)$) node[below] {$x\not{y}$};
+
+					\draw[-{Latex}] (0-1.south) -- node[right] {$\not{x}$} (1-1.north);
+					\draw[-{Latex}] (1-1.south) -- node[right] {$\not{x}y$} (2-1.north);
+					\draw[-{Latex}] (2-1.south) -- node[right] {$\not{x}y\not{z}$} (3-1.north);
+					\draw[-{Latex}] (3-1.south) -- node[right] {$\not{x}y\not{z}$} (4-1.north);
+					\draw[-{Latex}] (4-1.south) -- ($(4-1)+(0,-1)$) node[below] {$\not{x}y\not{z}$};
+
+					\draw[-{Latex}] (0-2.south) -- node[right] {$1$} (1-2.north);
+					\draw[-{Latex}] (1-2.south) -- node[right] {$y$} (2-2.north);
+					\draw[-{Latex}] (2-2.south) -- node[right] {$yz$} (3-2.north);
+					\draw[-{Latex}] (3-2.south) -- node[right] {$yz$} (4-2.north);
+					\draw[-{Latex}] (4-2.south) -- ($(4-2)+(0,-1)$) node[below] {$yz$};
+
+					\draw[-{Latex}] (0-3.south) -- node[right] {$1$} (1-3.north);
+					\draw[-{Latex}] (1-3.south) -- node[right] {$1$} (2-3.north);
+					\draw[-{Latex}] (2-3.south) -- node[right] {$\not{z}$} (3-3.north);
+					\draw[-{Latex}] (3-3.south) -- node[right] {$\not{z}$} (4-3.north);
+					\draw[-{Latex}] (4-3.south) -- ($(4-3)+(0,-1)$) node[below] {$\not{z}$};
+
+				% Outputs
+	    			\draw[-{Latex}] (3-0.east) -- node[above] {\scriptsize $x\not{y}$} (3-1.west);
+	    			\draw[-{Latex}] (3-1.east) -- node[above] {\scriptsize $x\not{y}$} node[below] {\scriptsize $+\not{x}y\not{z}$} (3-2.west);
+	    			\draw[-{Latex}] (3-2.east) -- node[above] {\scriptsize $x\not{y}$} node[below] {\scriptsize $+\not{x}y\not{z}$} (3-3.west);
+	    			\draw[-{Latex}] (3-3.east) -- ($(3-3)+(2,0)$) node[above] {$x\not{y}+\not{x}y\not{z}$};
+
+	    			\draw[-{Latex}] (4-0.east) -- node[above] {\scriptsize $0$} (4-1.west);
+	    			\draw[-{Latex}] (4-1.east) -- node[above] {\scriptsize $0$} (4-2.west);
+	    			\draw[-{Latex}] (4-2.east) -- node[above] {\scriptsize $yz$}(4-3.west);
+	    			\draw[-{Latex}] (4-3.east) -- ($(4-3)+(2,0)$) node[above] {$yz + \not{z}$};
+
+	    		% Labels
+	    			% https://tex.stackexchange.com/a/8906 Box
+	    			% https://tex.stackexchange.com/a/71479 Middle Pos 
+	    			\draw[draw=red,thick,dotted] ($(nestart.north west)$) rectangle ($(neend.south east)$) node at ($(nestart)!0.5!(neend)+(0,0.7)$) {\textcolor{red}{Neutralisierte Eingänge}}; % midway
+
+	    			\draw[draw=blue,thick,dotted] ($(gsestart.north west)$) rectangle ($(gseend.south east)$) node[rotate=90] at ($(gsestart)!0.5!(gseend)+(-0.7,0)$) {\textcolor{blue}{Gesperrte Eingänge}};
+
+	    			\draw[draw=OliveGreen,fill=OliveGreen,fill opacity=0.3,thick,dashed] ($(0-0.north west)+(-0.3,0.3)$) rectangle ($(2-3.south east)+(0.3,-0.3)$) ($(0-0)+(-0.8,1)$) node[left,fill opacity=1] {\textcolor{OliveGreen}{Und-Ebene}};
+
+	    			\draw[draw=Salmon,fill=Salmon,fill opacity=0.3,thick,dashed] ($(3-0.north west)+(-0.3,0.3)$) rectangle ($(4-3.south east)+(0.3,-0.3)$) ($(4-3)-(-3,1)$) node[left,fill opacity=1] {\textcolor{Salmon}{Oder-Ebene}};
+	    	\end{tikzpicture}
+    	\end{center}
+    \item Sehen Sie bitte \texttt{u03-ue08.txt}
+\end{enumerate}
