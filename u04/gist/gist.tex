@@ -1,0 +1,43 @@
+% Was trying to find an American Style Karnaugh Map drawing package that supported coloured 
+% boxes but it was very obscure, and I could not find much example code on the topic. Hence, 
+% this is a MWE gist for a K-Map with 2 variables and boxes
+
+% You need to compile this 2 times for it show correctly
+
+\documentclass[varwidth]{standalone}
+
+\usepackage[dvipsnames]{xcolor}		% For colours
+\usepackage{geometry} 		        % For proper standalone output
+\usepackage{tikz}					% For using tikz in askmaps
+\usepackage{askmaps}
+
+\usetikzlibrary{shapes}
+\tikzstyle{every picture}+=[remember picture]
+
+\begin{document}
+	% horizontal, vertical from bottom left corner of K-Map
+	% ORIGINAL: \color{red}\put(3.5,1.0){\oval(0.8,1.8)}
+	% Each term is 1.0 by 1.0
+	\askmapiv{$g(x_1,x_2,x_3,x_4)$}{{$x_{1}$}{$x_{2}$}{$x_{3}$}{$x_{4}$}}{}{1100000000110101}{%
+		\put(3.1,0.05){\tikz \coordinate (g1-BL);} % Bottom Left
+	    \put(3.9,1.95){\tikz \coordinate (g1-TR);} % Top Right
+	    \put(0,0){\tikz[overlay] \path[fill=blue, draw=blue, fill opacity=0.2, rounded corners=10pt] (g1-BL) rectangle (g1-TR);}
+
+	    \put(2.1,1.05){\tikz \coordinate (g2-BL);} % Bottom Left
+	    \put(2.9,2.95){\tikz \coordinate (g2-TR);} % Top Right
+	    \put(0,0){\tikz[overlay] \path[fill=orange, draw=orange, fill opacity=0.2, rounded corners=10pt] (g2-BL) rectangle (g2-TR);}
+
+	    \put(0.1,2.05){\tikz \coordinate (g3-BL);} % Bottom Left
+	    \put(0.9,3.95){\tikz \coordinate (g3-TR);} % Top Right
+	    \put(0,0){\tikz[overlay] \path[fill=Plum, draw=Plum, fill opacity=0.2, rounded corners=10pt] (g3-BL) rectangle (g3-TR);}
+	}
+	\hspace{3cm}.
+
+	\vspace{2cm}.
+	% Hacks to ensure output is visible
+\end{document}
+
+
+% References
+% https://tex.stackexchange.com/a/85097
+% https://stuff.mit.edu/afs/athena/contrib/tex-contrib/beamer/pgf-1.01/doc/generic/pgf/version-for-tex4ht/en/pgfmanualse10.html	

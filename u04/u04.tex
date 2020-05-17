@@ -1,4 +1,4 @@
-\def\nrub{3}
+\def\nrub{4}
 
 \RequirePackage{currfile}
 \documentclass[11pt]{article}
@@ -44,25 +44,10 @@
 \usepackage[version=0.96]{pgf}
 \usepackage{tikz}
 \usetikzlibrary{arrows,arrows.meta,shapes,snakes,automata,backgrounds,petri,positioning,circuits.logic.US}
+\usepackage{askmaps}
 
 \usepackage{csquotes}
 \MakeOuterQuote{"}
-
-% https://texfaq.org/FAQ-twooptarg
-    % \usepackage{xargs}
-    % \usepackage{etoolbox} % https://tex.stackexchange.com/a/53079
-    % \usepackage{ifthen}
-    % \newboolean{default}
-    % \newcommand{\case}{}
-    % \newcommand{\default}{}
-
-    % \newenvironment{switch}[1]{%
-    %     \setboolean{default}{true}
-    %     \renewcommand{\case}[2]{\ifthenelse{\equal{#1}{##1}}{%
-    %         \setboolean{default}{false}##2}{}}%
-    %     \renewcommand{\default}[1]{\ifthenelse{\boolean{default}}{##1}{}}
-    % }{}
-% https://tex.stackexchange.com/a/349350
 
 % http://packages.oth-regensburg.de/ctan/macros/latex/contrib/currfile/currfile.pdf
 % % https://tex.stackexchange.com/a/54891/116525
@@ -137,6 +122,27 @@
     \inheritbackgroundpath[from=rectangle]
 }
 % https://tex.stackexchange.com/a/300130
+
+\makeatletter
+    \newsavebox\myboxA
+    \newsavebox\myboxB
+    \newlength\mylenA
+
+    \newcommand*\xoverline[2][0.75]{%
+        \sbox{\myboxA}{$\m@th#2$}%
+        \setbox\myboxB\null% Phantom box
+        \ht\myboxB=\ht\myboxA%
+        \dp\myboxB=\dp\myboxA%
+        \wd\myboxB=#1\wd\myboxA% Scale phantom
+        \sbox\myboxB{$\m@th\overline{\copy\myboxB}$}%  Overlined phantom
+        \setlength\mylenA{\the\wd\myboxA}%   calc width diff
+        \addtolength\mylenA{-\the\wd\myboxB}%
+        \ifdim\wd\myboxB<\wd\myboxA%
+           \rlap{\hskip 0.5\mylenA\usebox\myboxB}{\usebox\myboxA}%
+        \else
+            \hskip -0.5\mylenA\rlap{\usebox\myboxA}{\hskip 0.5\mylenA\usebox\myboxB}%
+        \fi}
+\makeatother % https://tex.stackexchange.com/a/22101 for xoverline
 
 \newcommand{\blanko}[0]{\textcolor{white}{.}}
 \newcommand{\makeset}[1]{\left\{\,#1\,\right\}}
