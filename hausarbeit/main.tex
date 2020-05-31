@@ -1,0 +1,198 @@
+\def\nrub{1}
+
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{libertine}
+\usepackage[a4paper,top=1.6in]{geometry}
+\usepackage{parskip}
+\usepackage{amsmath, amsthm, amssymb} 
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage[makeroom]{cancel}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{vwcol} 	 	% Provides variable multicol
+\usepackage{commath} 	% Provides good differentials
+\usepackage{esint} 		% Provides various fancy integral symbols
+\usepackage[binary-units=true]{siunitx} 	% Provides good units
+\usepackage{nicefrac}
+\usepackage{dashrule}
+% \usepackage{minted}
+\usepackage{bookmark}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{
+    locale = DE,
+    per-mode=fraction,
+    fraction-function=\tfrac
+}
+
+\graphicspath{{../}}
+
+% https://github.com/mitchpaulus/siunitxext/blob/master/siunitxext.sty
+\DeclareSIUnit\inch{in}
+\DeclareSIUnit\in{in}
+\DeclareSIUnit\pixel{pixel}
+\DeclareSIUnit\pix{pixel}
+
+\usepackage[version=0.96]{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,arrows.meta,shapes,snakes,automata,backgrounds,petri,positioning,circuits.logic.US}
+\usepackage{askmaps-custom}
+
+\usepackage{csquotes}
+\MakeOuterQuote{"}
+
+% http://packages.oth-regensburg.de/ctan/macros/latex/contrib/currfile/currfile.pdf
+% % https://tex.stackexchange.com/a/54891/116525
+
+\makeatletter
+\newcommand{\toleftmargin}[1]{\par\noindent\hspace{-\@totalleftmargin}\parbox[t]{\textwidth}{#1}}
+% \newenvironment{javaenv}{\begin{minted}[linenos,firstnumber=last,autogobble,xleftmargin=-\@totalleftmargin]{java}}{}
+\newlength{\leftmargins}
+\makeatother
+% https://tex.stackexchange.com/a/481735
+
+
+\makeatletter
+% the contents of \squarecorner were mostly stolen from pgfmoduleshapes.code.tex
+\def\squarecorner#1{
+    % Calculate x
+    %
+    % First, is width < minimum width?
+    \pgf@x=\the\wd\pgfnodeparttextbox%
+    \pgfmathsetlength\pgf@xc{\pgfkeysvalueof{/pgf/inner xsep}}%
+    \advance\pgf@x by 2\pgf@xc%
+    \pgfmathsetlength\pgf@xb{\pgfkeysvalueof{/pgf/minimum width}}%
+    \ifdim\pgf@x<\pgf@xb%
+        % yes, too small. Enlarge...
+        \pgf@x=\pgf@xb%
+    \fi%
+    % Calculate y
+    %
+    % First, is height+depth < minimum height?
+    \pgf@y=\ht\pgfnodeparttextbox%
+    \advance\pgf@y by\dp\pgfnodeparttextbox%
+    \pgfmathsetlength\pgf@yc{\pgfkeysvalueof{/pgf/inner ysep}}%
+    \advance\pgf@y by 2\pgf@yc%
+    \pgfmathsetlength\pgf@yb{\pgfkeysvalueof{/pgf/minimum height}}%
+    \ifdim\pgf@y<\pgf@yb%
+        % yes, too small. Enlarge...
+        \pgf@y=\pgf@yb%
+    \fi%
+    %
+    % this \ifdim is the actual part that makes the node dimensions square.
+    \ifdim\pgf@x<\pgf@y%
+        \pgf@x=\pgf@y%
+    \else
+        \pgf@y=\pgf@x%
+    \fi
+    %
+    % Now, calculate right border: .5\wd\pgfnodeparttextbox + .5 \pgf@x + #1outer sep
+    \pgf@x=#1.5\pgf@x%
+    \advance\pgf@x by.5\wd\pgfnodeparttextbox%
+    \pgfmathsetlength\pgf@xa{\pgfkeysvalueof{/pgf/outer xsep}}%
+    \advance\pgf@x by#1\pgf@xa%
+    % Now, calculate upper border: .5\ht-.5\dp + .5 \pgf@y + #1outer sep
+    \pgf@y=#1.5\pgf@y%
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox%
+    \advance\pgf@y by.5\ht\pgfnodeparttextbox%
+    \pgfmathsetlength\pgf@ya{\pgfkeysvalueof{/pgf/outer ysep}}%
+    \advance\pgf@y by#1\pgf@ya%
+}
+\makeatother
+
+\pgfdeclareshape{square}{
+    \savedanchor\northeast{\squarecorner{}}
+    \savedanchor\southwest{\squarecorner{-}}
+
+    \foreach \x in {east,west} \foreach \y in {north,mid,base,south} {
+        \inheritanchor[from=rectangle]{\y\space\x}
+    }
+    \foreach \x in {east,west,north,mid,base,south,center,text} {
+        \inheritanchor[from=rectangle]{\x}
+    }
+    \inheritanchorborder[from=rectangle]
+    \inheritbackgroundpath[from=rectangle]
+}
+% https://tex.stackexchange.com/a/300130
+
+\makeatletter
+    \newsavebox\myboxA
+    \newsavebox\myboxB
+    \newlength\mylenA
+
+    \newcommand*\xoverline[2][0.75]{%
+        \sbox{\myboxA}{$\m@th#2$}%
+        \setbox\myboxB\null% Phantom box
+        \ht\myboxB=\ht\myboxA%
+        \dp\myboxB=\dp\myboxA%
+        \wd\myboxB=#1\wd\myboxA% Scale phantom
+        \sbox\myboxB{$\m@th\overline{\copy\myboxB}$}%  Overlined phantom
+        \setlength\mylenA{\the\wd\myboxA}%   calc width diff
+        \addtolength\mylenA{-\the\wd\myboxB}%
+        \ifdim\wd\myboxB<\wd\myboxA%
+           \rlap{\hskip 0.5\mylenA\usebox\myboxB}{\usebox\myboxA}%
+        \else
+            \hskip -0.5\mylenA\rlap{\usebox\myboxA}{\hskip 0.5\mylenA\usebox\myboxB}%
+        \fi}
+\makeatother % https://tex.stackexchange.com/a/22101 for xoverline
+
+\newcommand{\blanko}[0]{\textcolor{white}{.}}
+\newcommand{\makeset}[1]{\left\{\,#1\,\right\}}
+\newcommand*{\sigfig}[1]{\hspace{0.5cm}\text{(#1 sig. Zif.)}}
+\newcommand*{\nks}[1]{\hspace{0.5cm}\text{(#1 Nks.)}}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+% https://tex.stackexchange.com/a/42274/116525
+
+\usepackage{hyperref}
+\hypersetup{
+	pdftitle={Rechnerarchitektur (SS20) Online-Hausarbeit \nrub ~- 12141043},
+	pdfauthor={Yudong Sun},
+	bookmarksnumbered=true,
+	bookmarksopen=true,
+	bookmarksopenlevel=2,
+	pdfstartview=Fit,
+	pdfpagemode=UseOutlines,
+	colorlinks=true,
+	linkcolor=black,
+	filecolor=magenta,      
+	urlcolor=blue
+}
+\urlstyle{same}
+
+\renewcommand{\ttdefault}{cmtt}
+
+\usepackage{fancyhdr}
+ 
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{Yudong Sun / \texttt{12141043}}
+\fancyhead[L]{Online-Hausarbeit \nrub}
+\cfoot{\thepage}
+
+\title{Rechnerarchitektur (SS20)\\Online-Hausarbeit \nrub}
+\author{Yudong Sun\\\texttt{12141043}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\makeatletter
+    \newcommand\hanum{\two@digits{\nrub}}
+\makeatother
+
+\input{ha\hanum.tex}
+\input{../declaration.tex}
+
+\end{document}

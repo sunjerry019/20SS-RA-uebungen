@@ -1,0 +1,177 @@
+\newcommand{\boxy}[2][yellow]{\mathchoice%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\displaystyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\textstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptscriptstyle#2$}}}%
+
+\let\not\xoverline
+\let\nor\downarrow
+\newcommand{\xor}[2]{\not{#1}#2 \lor #1\not{#2}}
+\tikzstyle{every picture}+=[remember picture]
+
+\begin{enumerate}[label={[OH\arabic*]},start=1]
+    \item Meine Matrikelnummer lautet $12141043$, somit ist die Menge der letzten 4 Ziffern meiner Matrikelnummer $\makeset{0, 1, 3, 4}$. Die Funktion $f$ ist dann gegeben durch:
+        \begin{equation*}
+            f(x) \coloneqq 
+            \begin{cases}
+                ~1 & \text{falls } x \in \makeset{0, 1, 3, 4} \\
+                ~0 & \text{falls } x \in \makeset{2, 5, 6, 7, 8, 9} \\
+                ~D & \text{sonst}
+            \end{cases}
+        \end{equation*}
+        wobei $x \in [0, 15]$. Wir wandeln die Funktion $f$ in einer 4-stelligen boolschen Funktion, indem wir $x$ als eine 4-Bit-Zahl $x_1x_2x_3x_4$ darstellen.
+        \begin{enumerate}
+            \item Die Funktionstabelle von $f$ ist dann:
+                \begin{center}
+                    \begin{tabular}{lllllr}
+                        \toprule
+                        $x$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $f(x)$ \\
+                        \midrule
+                        $0$ & $0$ & $0$ & $0$ & $0$ & $1$ \\
+                        $1$ & $0$ & $0$ & $0$ & $1$ & $1$ \\
+                        $2$ & $0$ & $0$ & $1$ & $0$ & $0$ \\
+                        $3$ & $0$ & $0$ & $1$ & $1$ & $1$ \\
+                        $4$ & $0$ & $1$ & $0$ & $0$ & $1$ \\
+                        $5$ & $0$ & $1$ & $0$ & $1$ & $0$ \\
+                        $6$ & $0$ & $1$ & $1$ & $0$ & $0$ \\
+                        $7$ & $0$ & $1$ & $1$ & $1$ & $0$ \\
+                        $8$ & $1$ & $0$ & $0$ & $0$ & $0$ \\
+                        $9$ & $1$ & $0$ & $0$ & $1$ & $0$ \\
+                        $10$ & $1$ & $0$ & $1$ & $0$ & $D$ \\
+                        $11$ & $1$ & $0$ & $1$ & $1$ & $D$ \\
+                        $12$ & $1$ & $1$ & $0$ & $0$ & $D$ \\
+                        $13$ & $1$ & $1$ & $0$ & $1$ & $D$ \\
+                        $14$ & $1$ & $1$ & $1$ & $0$ & $D$ \\
+                        $15$ & $1$ & $1$ & $1$ & $1$ & $D$ \\
+                        \bottomrule
+                    \end{tabular}
+                \end{center}
+            \item Als disjunktive Normalform ist $f(x_1, x_2, x_3, x_4)$ gegeben durch:
+                \begin{equation*}
+                    f(x_1, x_2, x_3, x_4)
+                         = (\not{x_1}\not{x_2}\not{x_3}\not{x_4}) +
+                           (\not{x_1}\not{x_2}\not{x_3}    {x_4}) +
+                           (\not{x_1}\not{x_2}    {x_3}    {x_4}) +
+                           (\not{x_1}    {x_2}\not{x_3}\not{x_4})  
+                \end{equation*}
+                Die Don't Care Werten sind hier vernachlässigt. 
+            \item Wir minimieren nun $f$ mittels eines Karnaugh-Diagramms:
+                \begin{center}
+                    % horizontal, vertical from bottom left corner of K-Map
+                    % ORIGINAL: \color{red}\put(3.5,1.0){\oval(0.8,1.8)}
+                    % Each term is 1.0 by 1.0
+                    \askmapivRA{$f(x_1,x_2,x_3,x_4)$}{{$x_{1}$}{$x_{2}$}{$x_{3}$}{$x_{4}$}}{}{1101100000DDDDDD}{%
+                        \put(0.1,1.1){\tikz \coordinate (g1-BL);} % Bottom Left
+                        \put(0.9,2.9){\tikz \coordinate (g1-TR);} % Top Right
+                        \put(0,0){\tikz[overlay] \path[fill=orange, draw=orange, fill opacity=0.2, rounded corners=10pt] (g1-BL) rectangle (g1-TR);}
+
+                        \put(0.1,0.1){\tikz \coordinate (g2-BL);} % Bottom Left
+                        \put(1.9,0.9){\tikz \coordinate (g2-TR);} % Top Right
+                        \put(0,0){\tikz[overlay] \path[fill=Plum, draw=Plum, fill opacity=0.2, rounded corners=10pt] (g2-BL) rectangle (g2-TR);}
+                    }
+                \end{center}
+                Die minimierte Funktion ist somit gegeben durch:
+                \begin{equation}
+                    f(x_1,x_2,x_3,x_4) = 
+                        \boxy[orange]{\not{x_1}\not{x_2}     x_4} 
+                        + \boxy[Plum]{\not{x_1}\not{x_3}\not{x_4}}
+                \end{equation}
+            \end{enumerate}
+        \item 
+            \begin{enumerate}
+                \item Es handelt hier um zwei 3-stellige boolsche Funktionen $f_z(b_1, b_2, b_3)$ und $f_{nz}(b_1. b_2, b_3)$. Die Funktionstabelle ist gegeben durch:
+                    \begin{center}
+                        \begin{tabular}{lll|rr}
+                            \toprule
+                            $b_1$ & $b_2$ & $b_3$ & $f_z$ & $f_{nz}$ \\
+                            \midrule
+                            $0$ & $0$ & $0$ & $0$ & $1$ \\
+                            $0$ & $0$ & $1$ & $0$ & $1$ \\
+                            $0$ & $1$ & $0$ & $0$ & $1$ \\
+                            $0$ & $1$ & $1$ & $1$ & $0$ \\
+                            $1$ & $0$ & $0$ & $0$ & $1$ \\
+                            $1$ & $0$ & $1$ & $1$ & $0$ \\
+                            $1$ & $1$ & $0$ & $1$ & $0$ \\
+                            $1$ & $1$ & $1$ & $1$ & $0$ \\
+                            \bottomrule                            
+                        \end{tabular}
+                    \end{center}
+                \item Die DNF der beiden Funktionen sind:
+                    \begin{align*}
+                        f_z(b_1, b_2, b_3) 
+                           &= (\not{b_1}     b_2      b_3) 
+                            + (     b_1 \not{b_2}     b_3)
+                            + (     b_1      b_2 \not{b_3})
+                            + (     b_1      b_2      b_3) \\
+                        f_{nz}(b_1, b_2, b_3) 
+                           &= (\not{b_1}\not{b_2}\not{b_3}) 
+                            + (\not{b_1}\not{b_2}     b_3)
+                            + (\not{b_1}     b_2 \not{b_3})
+                            + (     b_1 \not{b_2}\not{b_3}) 
+                    \end{align*}
+                \item Wir minimieren nun $f_z$ und $f_{nz}$ mittels zwei Karnaugh-Diagrammen:
+                    % \vspace{-\baselineskip}
+                    \begin{multicols}{2}
+                        \begin{center}
+                            % horizontal, vertical from bottom left corner of K-Map
+                            % ORIGINAL: \color{red}\put(3.5,1.0){\oval(0.8,1.8)}
+                            % Each term is 1.0 by 1.0
+                            \askmapiii{$f_z$}{{$b_{1}$}{$b_{2}$}{$b_{3}$}}{}{00010111}{%
+                                \put(1.1,0.1){\tikz \coordinate (g1-BL);} % Bottom Left
+                                \put(2.9,0.9){\tikz \coordinate (g1-TR);} % Top Right
+                                \put(0,0){\tikz[overlay] \path[fill=Aquamarine, draw=Aquamarine, fill opacity=0.2, rounded corners=10pt] (g1-BL) rectangle (g1-TR);}
+
+                                \put(2.1,0.1){\tikz \coordinate (g2-BL);} % Bottom Left
+                                \put(3.9,0.9){\tikz \coordinate (g2-TR);} % Top Right
+                                \put(0,0){\tikz[overlay] \path[fill=OrangeRed, draw=OrangeRed, fill opacity=0.2, rounded corners=10pt] (g2-BL) rectangle (g2-TR);}
+
+                                \put(2.1,0.1){\tikz \coordinate (g3-BL);} % Bottom Left
+                                \put(2.9,1.9){\tikz \coordinate (g3-TR);} % Top Right
+                                \put(0,0){\tikz[overlay] \path[fill=OliveGreen, draw=OliveGreen, fill opacity=0.2, rounded corners=10pt] (g3-BL) rectangle (g3-TR);}
+                            }
+                        \end{center}
+                        \begin{center}
+                            % horizontal, vertical from bottom left corner of K-Map
+                            % ORIGINAL: \color{red}\put(3.5,1.0){\oval(0.8,1.8)}
+                            % Each term is 1.0 by 1.0
+                            \askmapiii{$f_{nz}$}{{$b_{1}$}{$b_{2}$}{$b_{3}$}}{}{11101000}{%
+                                \put(0.1,0.1){\tikz \coordinate (g1-BL);} % Bottom Left
+                                \put(0.9,1.9){\tikz \coordinate (g1-TR);} % Top Right
+                                \put(0,0){\tikz[overlay] \path[fill=Blue, draw=Blue, fill opacity=0.2, rounded corners=10pt] (g1-BL) rectangle (g1-TR);}
+
+                                \put(0.1,1.1){\tikz \coordinate (g2-BL);} % Bottom Left
+                                \put(1.9,1.9){\tikz \coordinate (g2-TR);} % Top Right
+                                \put(0,0){\tikz[overlay] \path[fill=Fuchsia, draw=Fuchsia, fill opacity=0.2, rounded corners=10pt] (g2-BL) rectangle (g2-TR);}
+
+
+                                \put( 3.1,1.1){\tikz \coordinate (g3-BL);}  % Bottom Left
+                                \put( 3.1,1.9){\tikz \coordinate (g3-TL);}  % Top Left
+                                \put( 4.2,1.9){\tikz \coordinate (g3-mTR);} % mid top right
+                                \put( 4.2,1.1){\tikz \coordinate (g3-mBR);} % mid bottom right
+
+                                \put(-0.2,1.1){\tikz \coordinate (g3-mBL);} % mid bottom left
+                                \put(-0.2,1.9){\tikz \coordinate (g3-mTL);} % mid top left
+                                \put( 0.9,1.9){\tikz \coordinate (g3-TR);}  % Top Right
+                                \put( 0.9,1.1){\tikz \coordinate (g3-BR);}  % Bottom Right
+                                \put(0,0){\tikz[overlay] \path[fill=BurntOrange, fill opacity=0.2, draw=BurntOrange] (g3-mBR) {[rounded corners=10pt] -- (g3-BL) -- (g3-TL)} -- (g3-mTR);}
+                                \put(0,0){\tikz[overlay] \path[fill=BurntOrange, fill opacity=0.2, draw=BurntOrange] (g3-mTL) {[rounded corners=10pt] -- (g3-TR) -- (g3-BR)} -- (g3-mBL);}
+                                % https://tex.stackexchange.com/a/306659
+                            }
+                        \end{center}
+                    \end{multicols}
+                    Die minimierte Funktionen sind dann gegeben durch:
+                    \begin{align}
+                        f_z(b_1,b_2,b_3) &= 
+                              \boxy[OliveGreen]{b_1b_2} 
+                            + \boxy[Aquamarine]{b_2b_3} 
+                            + \boxy[OrangeRed]{b_1b_3} = 
+                            \not{f_{nz}}\\
+                        f_{nz}(b_1,b_2,b_3) &= 
+                              \boxy[Blue]{\not{b_1}\not{b_2}} 
+                            + \boxy[BurntOrange]{\not{b_2}\not{b_3}} 
+                            + \boxy[Fuchsia]{\not{b_1}\not{b_3}} = 
+                            \not{f_{z}}
+                    \end{align}
+                    Wenn man eine von der beiden Funktionen schon hat, muss man nur die Ausgabe einer Funktion invertieren, um die Ausgabe der andere Funktion zu bekommen. Somit werden Kosten gespart. 
+            \end{enumerate}
+\end{enumerate}
