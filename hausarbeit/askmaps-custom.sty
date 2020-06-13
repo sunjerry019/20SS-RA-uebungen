@@ -265,7 +265,7 @@
 %% #1= output function variable
 %% #2= 4 input variables
 %% #3= options list
-%% #4= 16 function values in NEWORDER
+%% #4= 16 function values in original order
 %% #5= user defined picture commands
 \newcommand{\askmapivRA}[5]{%
 {\unitlength\askmapunitlength%
@@ -282,7 +282,7 @@
 \askmapargumentstring{#2}%
 \put(-0.4,4.55){\askmapgetchar\askmapgetchar}%
 \put(-1.0,4.1){\makebox(0.5,0){\askmapgetchar\askmapgetchar}}%
-\ifaskmap@opti%
+\ifaskmap@opti% THE ORDER HERE IS WRONG AND NOT EDITED
 \put(0.01,3.05){\scriptsize{\textsl{0}}}%
 \put(0.01,2.05){\scriptsize{\textsl{1}}}%
 \put(0.01,0.03){\scriptsize{\textsl{2}}}%
