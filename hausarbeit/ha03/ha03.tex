@@ -1,0 +1,129 @@
+\newcommand{\boxy}[2][yellow]{\mathchoice%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\displaystyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\textstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptscriptstyle#2$}}}%
+
+% \let\not\xoverline
+% \let\nor\downarrow
+% \newcommand{\xor}[2]{\not{#1}#2 \lor #1\not{#2}}
+\tikzstyle{every picture}+=[remember picture]
+
+\begin{enumerate}[label={[OH\arabic*]},start=5]
+    \item 
+        \begin{enumerate}
+            \item Die letzte 2 Ziffern meiner Matrikelnummer lautet "43" $\implies X = 43$. Die Zweierkomplementdarstellung von $X$ ist dann 
+                \begin{align}
+                    Y = (12)_{10} &= (0000 1100)_2 \notag \\
+                    K_2(Y) = 11110011 + 1 &= 11110100
+                \end{align}
+            \item Die erste 2 Ziffern meiner Matrikelnummer lautet "12" $\implies Y = 12$. Die Zweierkomplement von $Y$ ist dann:
+                \begin{align}
+                    Y = (12)_{10} &= (0000 1100)_2 \notag \\
+                    K_2(Y) = 11110011 + 1 &= 11110100
+                \end{align}
+            \item \blanko
+                \vspace{-\baselineskip}
+                % https://tex.stackexchange.com/a/11706/116525
+                \begin{center}
+                    \begin{tabular}{c *{8}{@{\,}c}}
+                              & {\scriptsize $_1$} & {\scriptsize $_1$} &&&&&&     \\
+                              & $0$ & $0$ & $1$ & $0$ & $1$ & $0$ & $1$ & $1$ \\
+                        $+$   & $1$ & $1$ & $1$ & $1$ & $0$ & $1$ & $0$ & $0$ \\
+                        \hline
+                        $\cancel{(1)}$ & $0$ & $0$ & $0$ & $1$ & $1$ & $1$ & $1$ & $1$
+                    \end{tabular}
+                \end{center}
+                Wir streichen den Übertrag aus und merken, dass die erste Ziffer $0$ ist. Damit ist das Ergebnis \textcolor{Magenta}{$00011111$} positiv und muss nicht umgewandelt werden. Es gilt:
+                \begin{align}
+                    X + K_2(Y) = (00011111)_2 = (31)_{10}
+                \end{align}
+                Das stimmt mit der Rechnung $43 - 12 = 31$ überein.
+        \end{enumerate}
+    \item Es sei $X = 1043$ und $Y = \nicefrac{1043}{4} = 260.75 = 260 + \frac{1}{2} + \frac{1}{4}$. Dann ist die Binärdarstellung von $Y$ gegeben durch:
+        \begin{align}
+            Y &= (260.75)_{10} = (100000100.11)_{2} = (1.0000010011)_{2}\cdot 2^{(8)_{10}} \\
+            \text{IEEE-754}(Y)&= (1.0000010011)_{2}\cdot 2^{(8 + 127)_{10}} = (1.0000010011)_{2}\cdot 2^{(135)_{10}} \notag \\
+                              &= (1.0000010011)_{2}\cdot 2^{(10000111)_{2}}
+        \end{align}
+        Die IEEE-754 Darstellung ist dann:
+        \begin{center}
+            \scriptsize
+            % \cmidrule(lr)
+            \begin{tabular}{|*{32}{@{\,}>{\centering\arraybackslash}p{3mm}@{\,}|}
+                }
+                \hline
+                31 & 30 & 29 & 28 & 27 & 26 & 25 & 24 & 23 & 22 & 21 & 20 & 19 & 18 & 17 & 16 & 15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+                \hline
+                \hline
+                0 & 
+                1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 &
+                0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                \hline
+                S & \multicolumn{7}{@{}c@{}}{~Exponent} &  & \multicolumn{23}{@{}c@{}|}{Significand} \\
+                \hline
+            \end{tabular}
+        \end{center}
+    \newpage
+    \item Da $E = (1111 1111)_2$ in dem IEEE-754 Standard speziall betrachtet wird, hat die größste darstellbare Zahl $R_\text{max}$ ein Exponent von $E = (1111 1110)_2 = 254$, inklusive das $127$ Bias. Damit ist $R_\text{max}$:
+        \begin{align*}
+            R_\text{max} &= (1.11111111111111111111111)_2 \cdot 2^{(254-127)_{10}} \\
+            &= (2^{24} - 1)_{10} \cdot 2^{(127-23)_{10}} = (2^{24} - 1)_{10} \cdot 2^{(104)_{10}} \\
+            &= (3.402823466 \cdot 10^{38})_{10}
+        \end{align*}
+        Analog hat die kleinste darstellbare Zahl das Exponent $E = (0000 0000)_2$ mit Bias und es gilt:
+        \begin{align*}
+            R_\text{min} &= (0.00000000000000000001)_2 \cdot 2^{(-127)_{10}} \\
+            &= (2^{-22})_{10} \cdot 2^{(-127)_{10}} = (2^{-149})_{10}\\
+            &= (1.401298464 \cdot 10^{-45})_{10}
+        \end{align*}
+        Leider (oder glücklicherweise) ist der Bereich von Zahlen, die dargestellt werden können, groß genug, um fast alle Zahlen aus der Naturwissenschaft als eine 32-bit Fließkommazahl darzustellen. 
+
+        Im Allgemein ist diese Darstellung aber nicht exact, was uns verlangt ist. Ein Beispiel einer extrem kleinen Zahl ist das Plancksches Wirkungsquantum $h$, was als $$h = \SI{6.62607015e-34}{\joule\per\second}$$ exact definiert ist. Da es keine ganze Zahl ist, lässt es sich nur durch eine Floating Point Zahl dargestellt werden.
+
+        Wir nomieren erst die Zahl mit $2^{-\ceil{\log_2(h)}}$ und erhalten wir:
+        \begin{equation*}
+            a_0 = h\times2^{-\ceil{\log_2(h)}} = \SI{6.62607015e-34} \times 2^{111} = \num{1.72022616121382}
+        \end{equation*}
+        Wir betrachten nun die Folge $(a_n)_{n \in \natzahl}$ und $(b_n)_{n \in \natzahl}$ mit:
+        \begin{align*}
+            a_n = \left(a_{n-1} - \floor{a_{n-1}}\right) \times 2 && b_n = \floor{a_n}
+        \end{align*}
+        Das $n$-te $b_n$ ist dann die $n$-te Ziffer unseres Mantisses. $b_0$ wird laut IEEE-754 nicht gespeichert. Da uns nur $23$-Bits für das Significand zur Verfügung steht, können wir nur bis $b_{23}$ speichern, obwohl es mehr Ziffern $b_i$ gibt, mit $i > 23$, $b_i \neq 0$.
+
+        In IEEE-754 dargestellt ist $h$ dann:
+        \begin{center}
+            \scriptsize
+            % \cmidrule(lr)
+            \begin{tabular}{|*{32}{@{\,}>{\centering\arraybackslash}p{3mm}@{\,}|}
+                }
+                \hline
+                31 & 30 & 29 & 28 & 27 & 26 & 25 & 24 & 23 & 22 & 21 & 20 & 19 & 18 & 17 & 16 & 15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+                \hline
+                \hline
+                0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 1 \\
+                \hline
+                S & \multicolumn{7}{@{}c@{}}{~Exponent} &  & \multicolumn{23}{@{}c@{}|}{Significand} \\
+                \hline
+            \end{tabular}
+        \end{center}
+        was umgerechnet:
+        \begin{equation*}
+            h' = \num{1.7202261686325073} \times 2^{-111} = \num{6.626070179e-34} \nks{9}
+        \end{equation*}
+        ergibt. Das entspricht ein Fehler von $\num{2.9e-42}$.
+
+        Somit lässt $h$ sich aus der Beschränkung der Anzahl der Bits nicht exact als Festkommazahl in 32 Bit-Darstellung darstellen und man kann nur eine Annäherung mit einem Fehler von $\num{2.9e-42}$ im Computer speichern.
+
+        % Im Allgemein ist aber diese Darstellung nicht exact, was uns verlangt ist. Ein Beispiel dafür ist die Lichtgeschwindigkeit, was als $c = \SI{299792458}{\meter\per\second}$ exact definiert ist. Obwohl es eine ganze Zahl ist, lässt es sich in machen Fällen nur durch eine Floating Point Zahl dargestellt werden (z.B. Floating-Point Division).
+
+        % In Binärdarstellung ist $c$:
+        % \begin{equation*}
+        %     c = (299792458)_{10} = (0001~0001~1101~1110~0111~1000~0100~1010)_2
+        % \end{equation*}
+        % was mindestens $\ceil{\log_2 (299792458)} = 29$ Bits zur Darstellung braucht. 
+
+        % Die IEEE-754 Darstellung von $c$ ist:
+        % \begin{align*} 
+        % \end{align*}
+\end{enumerate}

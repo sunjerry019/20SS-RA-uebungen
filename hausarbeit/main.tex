@@ -1,4 +1,4 @@
-\def\nrub{2}
+\def\nrub{3}
 
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -10,7 +10,7 @@
 \usepackage{mathtools}
 \usepackage{booktabs}
 \usepackage{tabularx}
-\usepackage{makecell}
+\usepackage{makecell, colortbl}
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage[table,dvipsnames]{xcolor}
@@ -30,9 +30,9 @@
 \usepackage{icomma}
 \usepackage{siunitx}
 \sisetup{
-    locale = DE,
-    per-mode=fraction,
-    fraction-function=\tfrac
+    locale = DE
+    % per-mode=fraction,
+    % fraction-function=\tfrac
 }
 
 \graphicspath{{../}}
@@ -150,6 +150,10 @@
 \newcommand{\makeset}[1]{\left\{\,#1\,\right\}}
 \newcommand*{\sigfig}[1]{\hspace{0.5cm}\text{(#1 sig. Zif.)}}
 \newcommand*{\nks}[1]{\hspace{0.5cm}\text{(#1 Nks.)}}
+\newcommand*{\realzahl}[0]{\mathbb{R}}
+\newcommand*{\natzahl}[0]{\mathbb{N}}
+\newcommand*{\ratzahl}[0]{\mathbb{Q}}
+\newcommand*{\intzahl}[0]{\mathbb{Z}}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 % https://tex.stackexchange.com/a/42274/116525
