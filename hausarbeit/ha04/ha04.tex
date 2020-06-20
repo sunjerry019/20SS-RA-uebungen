@@ -1,0 +1,192 @@
+\newcommand{\boxy}[2][yellow]{\mathchoice%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\displaystyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\textstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptscriptstyle#2$}}}%
+
+\let\bnot\xoverline
+\let\bnor\downarrow
+\newcommand{\xorexpanded}[2]{\bnot{#1}#2 \lor #1\bnot{#2}}
+\newcommand{\xor}[0]{\nleftrightarrow}
+\tikzstyle{every picture}+=[remember picture]
+
+\begin{enumerate}[label={[OH\arabic*]},start=8]
+    \item 
+        % 1. Mannschaft B   x+7
+        % 2. Mannschaft A   x
+
+        % 3 Games Left
+        % Win  = 3 Points
+        % Tie  = 1 point
+        % Loss = 0 points
+        % Variables A and B are independent of each other
+        Gegeben sei die Punkteverteilung:
+        \begin{center}
+            \begin{tabular}{l l}
+                \toprule
+                Ergebnis & Punkte \\
+                \midrule
+                Sieg & $3$ \\ 
+                Unentschieden & $1$ \\
+                Niederlage & $0$ \\
+                \bottomrule
+            \end{tabular}
+        \end{center}
+
+        Es gibt insgesamt $(3 \times 3 \times 3)^2 = 3^6 = 729$ verschiedene Spielergebnissen. Sodass Mannschaft $A$ Meister wird, braucht Mannschaft $A$ mindestens $8$ Punkte. Da es aber nur 3 Spielen gibt, muss Mannschaft A wegen der Punkteverteilung alle Spielen gewinnen. Das ergibt einen Punktegewinn von $9$ Punkte.
+
+        Da Mannschaft $B$ schon eine $7$ Punkte Vorsprung hat und wird bei einer Punktgleichheit gewinnen, kann Mannschaft $B$ maximal 1 Punkt gewinnen. 
+
+        Da es für jedes Spiel nur ein Ergebnis geben kann, ist:
+        \begin{align*}
+            A_{G_i} \implies \bnot{A_{U_i}}\land\bnot{A_{N_i}} && i = \makeset{1,2,3} \\
+            A_{U_i} \implies \bnot{A_{G_i}}\land\bnot{A_{N_i}} && i = \makeset{1,2,3} \\
+            A_{N_i} \implies \bnot{A_{U_i}}\land\bnot{A_{G_i}} && i = \makeset{1,2,3} \\
+            \\
+            B_{G_i} \implies \bnot{B_{U_i}}\land\bnot{B_{N_i}} && i = \makeset{1,2,3} \\
+            B_{U_i} \implies \bnot{B_{G_i}}\land\bnot{B_{N_i}} && i = \makeset{1,2,3} \\
+            B_{N_i} \implies \bnot{B_{U_i}}\land\bnot{B_{G_i}} && i = \makeset{1,2,3}
+        \end{align*}
+        Wir gehen davon aus, dass unsere Funktion nur gültige Ergebnisse bekommt. Das heißt zum Beispiel, dass keine Terme wie $B_{U_1}B_{N_1}B_{G_1}$ vorkommen werden.
+
+        Mit dieser Vorüberlegungen haben wir die folgende boolsche Funktion $f \colon \boolzahl^{18} \to \boolzahl$:
+        {\small
+            \begin{align*}
+                f &= \left(A_{G_1}A_{G_2}A_{G_3}\right)\land\left(B_{U_1}B_{N_2}B_{N_3} + B_{N_1}B_{U_2}B_{N_3} + B_{N_1}B_{N_2}B_{U_3} + B_{N_1}B_{N_2}B_{N_3} \right) \\ 
+                &\equiv \left(A_{G_1}A_{G_2}A_{G_3}\right)\land g 
+            \end{align*}
+        }
+
+        Um die Funktion $g$ minimieren zu können, schreiben wir alle $B_{U_i}$ als $\bnot{B_{G_i}}\bnot{B_{N_i}}$ und fügen zu jedem Minterm zusätzlich einen $\bnot{B_{G_j}}\bnot{B_{G_k}}$ Term mit $j,\,k \in \makeset{1,2,3}, j,\,k \neq i$, was kein Einfluss auf unsere Boolsche Funktion haben soll, besonders wenn alle Inputs gültig sind. Nun können wir $\bnot{B_{G_1}}\bnot{B_{G_2}}\bnot{B_{G_3}}$ ausklammern und erhalten wir:
+        {\small
+            \begin{align*}
+                g &= \left(\bnot{B_{G_1}}\bnot{B_{G_2}}\bnot{B_{G_3}}\right) \land \left(\bnot{B_{N_1}}B_{N_2}B_{N_3} + B_{N_1}\bnot{B_{N_2}}B_{N_3} + B_{N_1}B_{N_2}\bnot{B_{N_3}} + B_{N_1}B_{N_2}B_{N_3}\right) \\
+                &\equiv \left(\bnot{B_{G_1}}\bnot{B_{G_2}}\bnot{B_{G_3}}\right) \land h
+            \end{align*}
+        }
+        Die Wahrheitstabelle der Funktion $h$ ist gegeben durch:
+        \begin{equation*}
+            \begin{tabu}{ccc|r}
+                \toprule
+                B_{N_1}&B_{N_2}&B_{N_3}&h \\
+                \midrule
+                0 & 0 & 0 & 0 \\
+                0 & 0 & 1 & 0 \\
+                0 & 1 & 0 & 0 \\
+                0 & \cellcolor{Melon!30}1 & \cellcolor{Melon!30}1 & 1 \\
+                1 & 0 & 0 & 0 \\
+                \cellcolor{Melon!30}1 & 0 & \cellcolor{Melon!30}1 & 1 \\
+                \cellcolor{Melon!30}1 & \cellcolor{Melon!30}1 & 0 & 1 \\
+                \cellcolor{Melon!30}1 & \cellcolor{Melon!30}1 & \cellcolor{Melon!30}1 & 1 \\
+                \bottomrule
+            \end{tabu}
+        \end{equation*}
+        Wir minimieren nun die Funktion $h$ mithilfe eines Karnaugh-Diagramms:
+
+        \begin{center}
+            % horizontal, vertical from bottom left corner of K-Map
+            % ORIGINAL: \color{red}\put(3.5,1.0){\oval(0.8,1.8)}
+            % Each term is 1.0 by 1.0
+            \askmapiii{$h$}{{$B_{N_1}$}{$B_{N_2}$}{$B_{N_3}$}}{}{00010111}{%
+                \put(1.1,0.1){\tikz \coordinate (g1-BL);} % Bottom Left
+                \put(2.9,0.9){\tikz \coordinate (g1-TR);} % Top Right
+                \put(0,0){\tikz[overlay] \path[fill=Aquamarine, draw=Aquamarine, fill opacity=0.2, rounded corners=10pt] (g1-BL) rectangle (g1-TR);}
+
+                \put(2.1,0.1){\tikz \coordinate (g2-BL);} % Bottom Left
+                \put(3.9,0.9){\tikz \coordinate (g2-TR);} % Top Right
+                \put(0,0){\tikz[overlay] \path[fill=OrangeRed, draw=OrangeRed, fill opacity=0.2, rounded corners=10pt] (g2-BL) rectangle (g2-TR);}
+
+                \put(2.1,0.1){\tikz \coordinate (g3-BL);} % Bottom Left
+                \put(2.9,1.9){\tikz \coordinate (g3-TR);} % Top Right
+                \put(0,0){\tikz[overlay] \path[fill=OliveGreen, draw=OliveGreen, fill opacity=0.2, rounded corners=10pt] (g3-BL) rectangle (g3-TR);}
+            }
+        \end{center}
+        Die minimierte Funktionen sind dann gegeben durch:
+        \begin{align}
+            h &=  \boxy[OliveGreen]{B_{N_1}B_{N_2}} 
+                + \boxy[Aquamarine]{B_{N_2}B_{N_3}} 
+                + \boxy[OrangeRed]{B_{N_1}B_{N_3}}
+        \end{align}
+
+        Es ist auch zu bemerken, dass die Funktion $h$ die gleiche wie die Übertragsfunktion eines Volladdiers ist. 
+
+        Zusammengefasst erhalten wir als Endergebnis:
+        \begin{align}
+            f &= \left(A_{G_1}A_{G_2}A_{G_3}\right)\land g \notag\\
+            &= \left(A_{G_1}A_{G_2}A_{G_3}\right)\left(\bnot{B_{G_1}}\bnot{B_{G_2}}\bnot{B_{G_3}}\right) \land h \notag \\
+            &= \left(A_{G_1}A_{G_2}A_{G_3}\bnot{B_{G_1}}\bnot{B_{G_2}}\bnot{B_{G_3}}\right)\left(B_{N_1}B_{N_2} + B_{N_2}B_{N_3} + B_{N_1}B_{N_3}\right)
+        \end{align}
+
+        Insgesamt ergibt sich dann die Kosten:
+        \begin{equation*}
+            \text{Kosten} = 5 + 1 + 3 + 2 = 11
+        \end{equation*}
+
+        % Wir erkennen, dass die Funktion $h$ die gleiche wie die Übertragsfunktion eines Volladdiers ist und somit:
+        % { 
+        %     \begin{align*}
+        %         h &= ((B_{N_1} \xor B_{N_2}) \land B_{N_3}) + (B_{N_1} \land B_{N_2}) \\
+        %         &= \left(\xorexpanded{B_{N_1}}{B_{N_2}}\right)B_{N_3} + (B_{N_1} \land B_{N_2})
+        %     \end{align*}
+        % }
+        % ist. Zusammengefasst erhalten wir:
+        % {\small
+        %     \begin{align*}
+        %         f &= \left(A_{G_1}A_{G_2}A_{G_3}\right)\land g \\
+        %         &= \left(A_{G_1}A_{G_2}A_{G_3}\right)\left(\bnot{B_{G_1}}\bnot{B_{G_2}}\bnot{B_{G_3}}\right) \land h \\
+        %         &= \left(A_{G_1}A_{G_2}A_{G_3}\bnot{B_{G_1}}\bnot{B_{G_2}}\bnot{B_{G_3}}\right)\left((B_{N_1} \xor B_{N_2})B_{N_3} + B_{N_1}B_{N_2}\right) \\
+        %         &\equiv \left(A_{G_1}A_{G_2}A_{G_3}\bnot{B_{G_1}}\bnot{B_{G_2}}\bnot{B_{G_3}}\right)\left(\left(\xorexpanded{B_{N_1}}{B_{N_2}}\right)B_{N_3} + B_{N_1}B_{N_2}\right)
+        %     \end{align*}
+        % }
+
+        % \vspace{-\baselineskip}
+        % Ist $\xor$ sein eigenes Gatter, ist die Kosten $10$.\\
+        % Ist $\xor$ kein eigenes Gatter, ist die Kosten $12$.
+
+        Im Vergleich dazu war die ursprungliche Kosten $14$.
+    \item 
+        \begin{enumerate}
+            \item Verkürzung der Implikanten
+                \begin{center}
+                    \begin{tabular}{llllr}
+                        \toprule
+                        Gruppe & Implikant & \multicolumn{3}{r}{Einschl. Index} \\
+                        \midrule
+                        0 & $\square bcd$ & \texttt{*111} & \texttt{=} & \texttt{07,15}\\
+                          & $a\square cd$ & \texttt{1*11} & \texttt{=} & \texttt{11,15}\\
+                        1 & $\bnot{a}\square cd$ & \texttt{0*11} & \texttt{=} & \texttt{03,07}\\
+                          & $\bnot{a}b\square d$ & \texttt{01*1} & \texttt{=} & \texttt{05,07}\\
+                          & $\square \bnot{b}cd$ & \texttt{*011} & \texttt{=} & \texttt{03,11}\\
+                        2 & $\bnot{a}\bnot{b}\square d$ & \texttt{00*1} & \texttt{=} & \texttt{01,03}\\
+                          & $\bnot{a}\square\bnot{c}d$ & \texttt{0*01} & \texttt{=} & \texttt{01,05}\\
+                        \bottomrule
+                    \end{tabular}
+                \end{center}
+                Nochmal Verkürzung der Implikanten
+                \begin{center}
+                    \begin{tabular}{llllr}
+                        \toprule
+                        Gruppe & Implikant & \multicolumn{3}{r}{Einschl. Index} \\
+                        \midrule
+                        0 & $\square \square cd$ & \texttt{**11} & \texttt{=} & \texttt{03,07,11,15} \\
+                        1 & $\bnot{a}\square\square d$ & \texttt{0**1} & \texttt{=} & \texttt{01,03,05,07} \\
+                        \bottomrule
+                    \end{tabular}
+                \end{center}
+                Primimplikanten
+                \begin{center}
+                    \begin{tabular}{l*{6}{r}}
+                        \toprule
+                        Primimplikant & \texttt{01} & \texttt{03} & \texttt{05} & \texttt{07} & \texttt{11} & \texttt{15} \\
+                        \midrule
+                        $cd$        &   & 1 &   & 1 & 1 & 1  \\
+                        $\bnot{a}d$ & 1 & 1 & 1 & 1 &   &    \\
+                        \bottomrule
+                    \end{tabular}
+                \end{center}
+            \item Die minimierte Funktion ist somit gegeben durch:
+                \begin{align}
+                    f(a,b,c,d) = cd + \bnot{a}d
+                \end{align}
+        \end{enumerate}
+\end{enumerate}
