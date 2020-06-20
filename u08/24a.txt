@@ -1,0 +1,10 @@
+24a) Erläutern Sie zunächst die Begriffe Call by Value and Call by Reference. 
+     Geben Sie zu beiden Konzepten je ein Beispiel an.
+
+	call by value: Der Wert einer Variablen wird referenziert (eine Kopie)
+	call by reference: Die Adresse der Variablen wird referenziert.
+
+	int  cbv_addition(int  y, int  z)          return y + z; 
+	void cbr_addition(int* x, int* y, int* z)  *x = *y + *z;
+
+	* = dereference the pointer

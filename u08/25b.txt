@@ -1,0 +1,7 @@
+25b) Was ist die größte und die kleinste Dezimalzahl für die Ihr
+     Programm korrekt funktioniert? Begründen Sie ihre Antwort. 
+
+     --                 v Account for the zero
+     Größte:	 2^31 - 1 =  2147483647
+     Kleinste:	-2^31     = -2147483648
+     Begründung: MIPS hat 32-Bit Registerbreite
