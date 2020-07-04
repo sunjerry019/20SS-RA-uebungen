@@ -1,4 +1,5 @@
-\def\nrub{4}
+\def\nrub{5a}
+\def\hanum{ha05a}
 
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -26,7 +27,7 @@
 \usepackage[binary-units=true]{siunitx} 	% Provides good units
 \usepackage{nicefrac}
 \usepackage{dashrule}
-% \usepackage{minted}
+\usepackage{minted}
 \usepackage{bookmark}
 \usepackage{icomma}
 \usepackage{siunitx}
@@ -194,11 +195,12 @@
 
 \maketitle
 
-\makeatletter
-    \newcommand\hanum{\two@digits{\nrub}}
-\makeatother
+% \makeatletter
+%     \newcommand\hanum{\two@digits{\nrub}}
+% \makeatother
 
-\input{ha\hanum.tex}
+% \input{ha\hanum.tex}
+\input{\hanum.tex}
 \input{../declaration.tex}
 
 \end{document}

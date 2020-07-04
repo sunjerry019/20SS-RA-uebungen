@@ -1,0 +1,34 @@
+\newcommand{\boxy}[2][yellow]{\mathchoice%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\displaystyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\textstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptscriptstyle#2$}}}%
+
+\let\bnot\xoverline
+\let\bnor\downarrow
+\newcommand{\xorexpanded}[2]{\bnot{#1}#2 \lor #1\bnot{#2}}
+\newcommand{\xor}[0]{\nleftrightarrow}
+\newcommand{\linenum}[1]{\textcolor{RedViolet}{\texttt{#1}}}
+\tikzstyle{every picture}+=[remember picture]
+
+\begin{enumerate}[label={[OH\arabic*]},start=11]
+    \item
+        \begin{enumerate}
+            \makeatletter
+                \setlength{\leftmargins}{\@totalleftmargin}
+            \makeatother
+
+            \item 
+                \begin{enumerate}
+                    \item Zeile \linenum{17}: Der aktuelle Buchstabe des Strings \texttt{needle} wird in ein Register geladen.
+                    \item Zeile \linenum{72}: Die Anzahl der gezählten Vokale wird auf der Konsole ausgegeben.
+                    \item Zeile \linenum{37}: Erhöhe die Anzahl der gezählten Vokale um eins.
+                    \item Zeile \linenum{18}: Führe einen Sprung durch, sofern alle Buchstaben des Strings needle betrachtet wurden.
+                \end{enumerate}
+
+            % https://quantixed.org/2018/10/23/new-lexicon-how-to-add-a-custom-minted-lexer-in-overleaf/
+            % breaklines
+            \item \blanko
+                { \small \inputminted[linenos,firstnumber=last,autogobble,xleftmargin=-\leftmargins,frame=leftline,framesep=10pt]{mipslexer.py:MIPSLexer -x}{vokale.s} }
+        \end{enumerate}
+\end{enumerate}
