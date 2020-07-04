@@ -6,17 +6,22 @@ if [ $# -ne 1 ]; then
 	exit 1
 fi
 
-IFS='a' read -ra UB <<< "$1"
-
 TITLE=$1
-UBNR=$((10#${UB[1]})) # https://stackoverflow.com/a/11130324
+
+# IFS='a' read -ra UB <<< "$1"
+# UBNR=$((10#${UB[1]})) # https://stackoverflow.com/a/11130324
+
+UBNR=$(echo $1 | cut -c3- | sed 's/^0*//') 
+# https://stackoverflow.com/a/6594179
+# https://stackoverflow.com/a/11123842
 
 echo "Compiling $TITLE"
 
 WEG="./$TITLE/"
 
 # Edit ubauf
-sed -ri 's/\\def\\nrub\{[0-9]+\}/\\def\\nrub\{'$UBNR'\}/g' "main.tex"
+sed -ri 's/\\def\\nrub\{\S+\}/\\def\\nrub\{'$UBNR'\}/g' "main.tex"
+sed -ri 's/\\def\\hanum\{\S+\}/\\def\\hanum\{'$TITLE'\}/g' "main.tex"
 # always use r before i
 
 CURRPWD=$(pwd)
@@ -26,4 +31,3 @@ cd "$WEG"
 # https://stackoverflow.com/a/21360477
 # Compile
 TEXINPUTS="$CURRPWD:" texliveonfly --compiler=pdflatex --arguments="-synctex=1 -interaction=nonstopmode --shell-escape -jobname=$TITLE" "../main.tex"
-
