@@ -1,0 +1,34 @@
+\newcommand{\boxy}[2][yellow]{\mathchoice%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\displaystyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\textstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptscriptstyle#2$}}}%
+
+\let\bnot\xoverline
+\let\bnor\downarrow
+\newcommand{\xorexpanded}[2]{\bnot{#1}#2 \lor #1\bnot{#2}}
+\newcommand{\xor}[0]{\nleftrightarrow}
+\newcommand{\linenum}[1]{\textcolor{RedViolet}{\texttt{#1}}}
+\tikzstyle{every picture}+=[remember picture]
+
+\begin{enumerate}[label={[OH\arabic*]},start=10]
+    \item
+        \begin{enumerate}
+            \makeatletter
+                \setlength{\leftmargins}{\@totalleftmargin}
+            \makeatother
+
+            \item 
+                \begin{enumerate}
+                    \item Zeile \linenum{32}: aktuelle Buchstabe in ein Register geladen
+                    \item Zeile \linenum{24,77,81}: Text mit Anfangsaddress $a0$ wird auf der Konsole ausgeben
+                    \item Zeile \linenum{43}: Springen, sofern ein Wert größer ist, als der Wert der ASCII-Darstellung des Buchstaben "Z"
+                    \item Zeile \linenum{31}: Springen, sofern alle zu verschlüsselnden Buchstaben betrachtet wurden
+                \end{enumerate}
+
+            % https://quantixed.org/2018/10/23/new-lexicon-how-to-add-a-custom-minted-lexer-in-overleaf/
+            % breaklines
+            \item \blanko
+                { \small \inputminted[linenos,firstnumber=last,autogobble,xleftmargin=-\leftmargins,frame=leftline,framesep=10pt]{mipslexer.py:MIPSLexer -x}{caeser.s} }
+        \end{enumerate}
+\end{enumerate}
