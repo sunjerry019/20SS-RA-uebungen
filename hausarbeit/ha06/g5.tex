@@ -1,0 +1,138 @@
+{\scriptsize
+\begin{tikzpicture}[circuit logic US,scale=0.7, every node/.style={scale=0.7},
+	fulladder/.style={draw, minimum width=2cm,minimum height=1.5cm,
+    label={[anchor=west]left:\textcolor{black!65}{$U_\text{out}$}},
+    label={[anchor=south]below:\textcolor{black!65}{$R$}},
+    label={[anchor=east]right:\textcolor{black!65}{$U_\text{in}$}},
+    label={[anchor=north]65:\textcolor{black!65}{$y$}},
+    label={[anchor=north]115:\textcolor{black!65}{$x\vphantom{y}$}},
+    }] %scale=0.6, every node/.style={scale=0.6}
+
+    % https://tex.stackexchange.com/a/277983
+
+	% and and ors for inputs directly
+	\node[and gate,inputs={nn}, point left] (and4) at (0,-1)    {};
+	\node[or gate,inputs={nn}, point left]  (or4)  at (0,-2)    {};
+	\node[and gate,inputs={nn}, point left] (and3) at (0,-3)    {};
+	\node[or gate,inputs={nn}, point left]  (or3)  at (0,-4)    {};
+	\node[and gate,inputs={nn}, point left] (and2) at (0,-5)    {};
+	\node[or gate,inputs={nn}, point left]  (or2)  at (0,-6)    {};
+	\node[and gate,inputs={nn}, point left] (and1) at (0,-7)    {};
+	\node[or gate,inputs={nn}, point left]  (or1)  at (0,-8)    {};
+	\node[and gate,inputs={nn}, point left] (and0) at (0,-9)    {};
+	\node[or gate,inputs={nn}, point left]  (or0)  at (0,-10)   {};
+
+	% summation and gates
+	\node[and gate,inputs={nnnnnn}, point down] (and-comb0) at (-1.5,-11.5)    {};
+	\node[and gate,inputs={nnnnn}, point down]  (and-comb1) at (-3.5,-10)      {};
+	\node[and gate,inputs={nnnn}, point down]   (and-comb2) at (-5.5,-8.5)     {};
+	\node[and gate,inputs={nnn}, point down]    (and-comb3) at (-7.5,-7.0)     {};
+	\node[and gate,inputs={nn}, point down]     (and-comb4) at (-9.5,-5.5)     {};
+
+	% Final or
+	\node[or gate,inputs={nnnnnn}, point down]  (or-final)  at (-6.5,-13)   {};
+
+	% VA
+	\node[fulladder] (z4) at (2,-11.5)   {\large \VA};
+	\node[fulladder] (z3) at (4.5,-11.5) {\large \VA};
+	\node[fulladder] (z2) at (7,-11.5)   {\large \VA};
+	\node[fulladder] (z1) at (9.5,-11.5) {\large \VA};
+	\node[fulladder] (z0) at (12,-11.5)  {\large \VA};
+
+	% labels
+	%                    angle:dist
+	\draw[] (z4.115) --++(90:10.5) node [above] (x4) {\large $x_4\vphantom{y_4}$};
+	\draw[] (z4.65)  --++(90:10.5) node [above] (y4) {\large $y_4$};
+	\draw[] (z3.115) --++(90:10.5) node [above] (x3) {\large $x_3\vphantom{y_3}$};
+	\draw[] (z3.65)  --++(90:10.5) node [above] (y3) {\large $y_3$};
+	\draw[] (z2.115) --++(90:10.5) node [above] (x2) {\large $x_2\vphantom{y_2}$};
+	\draw[] (z2.65)  --++(90:10.5) node [above] (y2) {\large $y_2$};
+	\draw[] (z1.115) --++(90:10.5) node [above] (x1) {\large $x_1\vphantom{y_1}$};
+	\draw[] (z1.65)  --++(90:10.5) node [above] (y1) {\large $y_1$};
+	\draw[] (z0.115) --++(90:10.5) node [above] (x0) {\large $x_0\vphantom{y_0}$};
+	\draw[] (z0.65)  --++(90:10.5) node [above] (y0) {\large $y_0$};
+	\node[right of=y0] (u0) {\large $U_\text{in}$};
+
+	% https://tex.stackexchange.com/a/277983
+
+	% LINES
+	%                  first vert then hori
+	% https://stuff.mit.edu/afs/athena/contrib/tex-contrib/beamer/pgf-1.01/doc/generic/pgf/version-for-tex4ht/en/pgfmanualse9.html
+
+	% Carries
+	\draw[] (u0.south) |- (z0.east);
+	\draw[] (z0.west) -- (z1.east);
+	\draw[] (z1.west) -- (z2.east);
+	\draw[] (z2.west) -- (z3.east);
+	\draw[] (z3.west) -- (z4.east);
+	\draw[] (z4.west) --++(180:0.5);
+
+	% To first stage
+	\draw[Midcircle-] (x4 |- and4.input 2) -- (and4.input 2);
+	\draw[Midcircle-] (y4 |- and4.input 1) -- (and4.input 1);
+	\draw[Midcircle-] (x4 |- or4.input 2) -- (or4.input 2);
+	\draw[Midcircle-] (y4 |- or4.input 1) -- (or4.input 1);
+
+	\draw[Midcircle-] (x3 |- and3.input 2) -- (and3.input 2);
+	\draw[Midcircle-] (y3 |- and3.input 1) -- (and3.input 1);
+	\draw[Midcircle-] (x3 |- or3.input 2) -- (or3.input 2);
+	\draw[Midcircle-] (y3 |- or3.input 1) -- (or3.input 1);
+
+	\draw[Midcircle-] (x2 |- and2.input 2) -- (and2.input 2);
+	\draw[Midcircle-] (y2 |- and2.input 1) -- (and2.input 1);
+	\draw[Midcircle-] (x2 |- or2.input 2) -- (or2.input 2);
+	\draw[Midcircle-] (y2 |- or2.input 1) -- (or2.input 1);
+
+	\draw[Midcircle-] (x1 |- and1.input 2) -- (and1.input 2);
+	\draw[Midcircle-] (y1 |- and1.input 1) -- (and1.input 1);
+	\draw[Midcircle-] (x1 |- or1.input 2) -- (or1.input 2);
+	\draw[Midcircle-] (y1 |- or1.input 1) -- (or1.input 1);
+
+	\draw[Midcircle-] (x0 |- and0.input 2) -- (and0.input 2);
+	\draw[Midcircle-] (y0 |- and0.input 1) -- (and0.input 1);
+	\draw[Midcircle-] (x0 |- or0.input 2) -- (or0.input 2);
+	\draw[Midcircle-] (y0 |- or0.input 1) -- (or0.input 1);
+
+	% To and stage
+	%4
+		\draw[] (or4.output)  -| (and-comb4.input 2);
+		\draw[] (and3.output) -| (and-comb4.input 1);
+	%3
+		\draw[Midcircle-] (or4.output -| and-comb3.input 3) -- (and-comb3.input 3);
+		\draw[] (or3.output)  -| (and-comb3.input 2);
+		\draw[] (and2.output) -| (and-comb3.input 1);
+	%2
+		\draw[Midcircle-] (or4.output -| and-comb2.input 4) -- (and-comb2.input 4);
+		\draw[Midcircle-] (or3.output -| and-comb2.input 3) -- (and-comb2.input 3);
+		\draw[] (or2.output)  -| (and-comb2.input 2);
+		\draw[] (and1.output) -| (and-comb2.input 1);
+	%1
+		\draw[Midcircle-] (or4.output -| and-comb1.input 5) -- (and-comb1.input 5);
+		\draw[Midcircle-] (or3.output -| and-comb1.input 4) -- (and-comb1.input 4);
+		\draw[Midcircle-] (or2.output -| and-comb1.input 3) -- (and-comb1.input 3);
+		\draw[] (or1.output)  -| (and-comb1.input 2);
+		\draw[] (and0.output) -| (and-comb1.input 1);
+	%0
+		\draw[Midcircle-] (or4.output -| and-comb0.input 6) -- (and-comb0.input 6);
+		\draw[Midcircle-] (or3.output -| and-comb0.input 5) -- (and-comb0.input 5);
+		\draw[Midcircle-] (or2.output -| and-comb0.input 4) -- (and-comb0.input 4);
+		\draw[Midcircle-] (or1.output -| and-comb0.input 3) -- (and-comb0.input 3);
+		\draw[] (or0.output)  -| (and-comb0.input 2);
+		\draw[Midcircle-] ($(u0)-(0,10.4)$) -| (and-comb0.input 1);
+
+	% To final or stage
+	\draw[] (and4.output) -| (-10.5,-12) -| (or-final.input 6);
+	\draw[] (and-comb4.output) --++(270:6) -| (or-final.input 5);
+	\draw[] (and-comb3.output) --++(270:4.3) -| (or-final.input 4);
+	\draw[] (and-comb2.output) --++(270:2.735) -| (or-final.input 3);
+	\draw[] (and-comb1.output) --++(270:1.5) -| (or-final.input 2);
+	\draw[] (and-comb0.output) --++(270:0.25) -| (or-final.input 1);
+
+	% Output
+	\draw[] (z4.south) --++(270:2) node [below] (r4) {\large $R_4$};
+	\draw[] (z3.south) --++(270:2) node [below] (r3) {\large $R_3$};
+	\draw[] (z2.south) --++(270:2) node [below] (r2) {\large $R_2$};
+	\draw[] (z1.south) --++(270:2) node [below] (r1) {\large $R_1$};
+	\draw[] (z0.south) --++(270:2) node [below] (r0) {\large $R_0$};
+	\draw[] (or-final.output) --++(270:0.7) node [below] (u1) {\large $U_\text{out}$};
+\end{tikzpicture}}

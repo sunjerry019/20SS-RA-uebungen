@@ -1,0 +1,275 @@
+\newcommand{\boxy}[2][yellow]{\mathchoice%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\displaystyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\textstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptstyle#2$}}%
+  {\pgfsetfillopacity{0.3}\colorbox{#1}{\pgfsetfillopacity{1}$\scriptscriptstyle#2$}}}%
+
+\let\bnot\xoverline
+\let\bnor\downarrow
+\newcommand{\xorexpanded}[2]{\bnot{#1}#2 \lor #1\bnot{#2}}
+\newcommand{\xor}[0]{\nleftrightarrow}
+% \tikzstyle{every picture}+=[remember picture]
+\newcommand*{\VA}[0]{\textcolor{blue}{VA}}
+
+% https://tex.stackexchange.com/a/401771
+\pgfdeclarearrow{
+    name=Midcircle,
+    parameters= {\the\pgfarrowlength},  
+    setup code={
+        \pgfarrowssettipend{0.25\pgfarrowlength}
+        \pgfarrowssetlineend{-0.25\pgfarrowlength}
+        \pgfarrowlinewidth=\pgflinewidth
+        \pgfarrowssavethe\pgfarrowlength
+    },
+    drawing code={
+        \pgfpathcircle{\pgfpoint{0.25\pgfarrowlength}{0pt}}{0.5\pgfarrowlength}
+        \pgfusepathqfill
+    },
+    defaults = { length = 2pt }
+}
+\pgfdeclarearrow{
+    name=MidcircleBig,
+    parameters= {\the\pgfarrowlength},  
+    setup code={
+        \pgfarrowssettipend{0.25\pgfarrowlength}
+        \pgfarrowssetlineend{-0.25\pgfarrowlength}
+        \pgfarrowlinewidth=\pgflinewidth
+        \pgfarrowssavethe\pgfarrowlength
+    },
+    drawing code={
+        \pgfpathcircle{\pgfpoint{0.25\pgfarrowlength}{0pt}}{0.5\pgfarrowlength}
+        \pgfusepathqfill
+    },
+    defaults = { length = 4pt }
+}
+
+% https://tex.stackexchange.com/a/228533
+\makeatletter
+\newcommand\captionof[1]{\def\@captype{#1}\caption}
+\makeatother
+
+\begin{enumerate}[label={[OH\arabic*]},start=12]
+    \item
+        \begin{enumerate}[label={(\alph*)}]
+            \item \blanko
+                \vspace{-\baselineskip}
+                % https://tex.stackexchange.com/a/11706/116525
+                \begin{center}
+                    \begin{tabular}{c *{5}{@{\,}c}}
+                              & $x_4$ & $x_3$ & $x_2$ & $x_1$ & $x_0$ \\
+                        $+$   & $y_4$ & $y_3$ & $y_2$ & $y_1$ & $y_0$ \\
+                        \hline
+                        $U_{\text{out}}$ & $R_4$ & $R_3$ & $R_2$ & $R_1$ & $R_0$
+                    \end{tabular}
+                \end{center}
+                \begin{align*}
+                    U_{\text{out}} = &~ x_4y_4 \\
+                    &+ (x_4 + y_4)\,x_3y_3 \\
+                    &+ (x_4 + y_4)(x_3+y_3)\,x_2y_2 \\
+                    &+ (x_4 + y_4)(x_3+y_3)(x_2+y_2)\,x_1y_1 \\
+                    &+ (x_4 + y_4)(x_3+y_3)(x_2+y_2)(x_1+y_1)\,x_0y_0 \\
+                    &+ (x_4 + y_4)(x_3+y_3)(x_2+y_2)(x_1+y_1)(x_0 + y_0)\,U_\text{in} \\
+                \end{align*}
+            \newpage
+            \item Es wird angenommen, dass man den eingehenden Übertrag auch betrachten muss:
+                \makeatletter
+                    \setlength{\leftmargins}{\@totalleftmargin}
+                \makeatother
+
+                \vspace{\baselineskip} 
+                \hspace{-\leftmargins}\hspace{-1cm}\input{g5.tex} 
+                \vspace{\baselineskip} 
+            \item \label{qn:ha}
+                Setze $12141043$ in der Formel:
+                \begin{align*}
+                    z &= \left(\left(\frac{\text{Matr. Nr}}{2}\cdot 10\right) \mod 1000\right) + 25 \\
+                    &= \left(\left(\frac{12141043}{2}\cdot 10\right) \mod 1000\right) + 25 \\
+                    &=\left(60705215 \mod 1000\right) + 25 \\
+                    &= 215 + 25\\
+                    &= 240
+                \end{align*}
+                % Da die Aufgabestellung fordert keine explizite Verwendung von Halbaddierer an, gehen wir davon aus, dass die Addition zweier $240$-Bit Dualzahlen ausschließlich aus dem oben gezeichneten Carry-Look-Ahead-Addierer realisiert werden ist (d.h. Es steht keinen Halbaddierer zur Verfügung).
+
+                % Wir gehen davon aus, dass wir nur die oben gezeichnete Carry-Look-Ahead-Addierer  verwenden (d.h. Es steht keinen Halbaddierer zur Verfügung).
+                Ein Carry-Look-Ahead-Addierer mit einer Größe der Bit-Gruppen von $g=5$ braucht insgesamt
+                \begin{equation}
+                    3\times\SI{10}{\pico\second} = \SI{30}{\pico\second}
+                \end{equation}
+                für $U_\text{out}$ ($3$ Stufen) und 
+                \begin{equation}
+                    5\times\SI{70}{\pico\second} = \SI{350}{\pico\second}
+                \end{equation}
+                für $R_0$ bis $R_4$ (fünf Volladdierer, jeweils mit $T_\text{VA} = \SI{70}{\pico\second}$). Da es mehrere Carry-Look-Ahead-Addierer hintereinander geschaltet werden, ist es egal, ob der erste Carry-Look-Ahead-Addierer einen Volladdier oder einen Halbaddier für die erste Ziffer $R_0$ benutzt. Wir brauchen also insgesamt:
+                \begin{align*}
+                    T_{\text{CLA}} &= \left(\frac{240}{5} - 1\right) T_{(U\text{out})} + \SI{350}{\pico\second} \\
+                    &= 47 \times \SI{30}{\pico\second} + \SI{350}{\pico\second} \\
+                    &= \boxy{\SI{1760}{\pico\second}}
+                \end{align*}
+                Für ein Ripple-Carry-Addiernetz brauchen wir aber einen Halbaddierer für die erste Ziffer. Da es in der Aufgabestellung aber nicht gegeben war, berechnen wir zunächst die Verzögerung eines Halbaddierers der Form:
+
+                \begin{minipage}{\linewidth}
+                    \vspace{\baselineskip}
+                    \centering
+                    \begin{tikzpicture}[circuit logic US, scale=0.9, every node/.style={scale=0.9}]
+                        \node[and gate,inputs={ni}, point down] (and1) at (0,-1)    {};
+                        \node[and gate,inputs={in}, point down] (and2) at (1,-1)    {};
+                        \node[and gate,inputs={nn}, point down] (and3) at (2,-1)    {};
+
+                        \node[or gate,inputs={nn}, point down] (or) at ($(and1)!0.5!(and2)+(0,-1)$)    {};
+
+                        \draw[] (and3.input 1) |- (-1, 0.2) node[left] (x) {$x$};
+                        \draw[] (and3.input 2) |- (-1,-0.2) node[left] (y) {$y$};
+                        \draw[-Midcircle] (and1.input 2) |- ( y -| and1.input 2);
+                        \draw[-Midcircle] (and1.input 1) |- ( x -| and1.input 1);
+                        \draw[-Midcircle] (and2.input 2) |- ( y -| and2.input 2);
+                        \draw[-Midcircle] (and2.input 1) |- ( x -| and2.input 1);
+
+                        \draw[] (and1.output) |- ($(or.input 2)+(0,0.2)$) -- (or.input 2);
+                        \draw[] (and2.output) |- ($(or.input 1)+(0,0.2)$) -- (or.input 1);
+
+                        \draw[] (or.output)   --++(270:0.3) node [below] (r) {$R$};
+                        \node[] (u) at (r -| and3.output) {$U$};
+                        \draw[] (and3.output) -- (u) ;
+                    \end{tikzpicture}
+                    \captionof{figure}{Halbaddierer}
+                    \label{fig:ha}
+                    \vspace{\baselineskip}
+                \end{minipage}
+
+                Angenommen, dass ein \texttt{NOT}-Gatter auch eine Verzögerung von $\SI{10}{\pico\second}$ verursacht, dann haben wir:
+                \begin{equation}
+                    T_{\text{HA}} = 3 \times \SI{10}{\pico\second} = \SI{30}{\pico\second} 
+                \end{equation}
+                Somit braucht ein Ripple-Carry-Addiernetz, das zwei $240$-stellige Dualzahlen addieren kann, insgesamt:
+                \begin{align*}
+                    T_{\text{RC}} &= (240 - 1)\times T_{\text{VA}} + T_{\text{HA}} \\
+                    &=239 \times \SI{70}{\pico\second} + \SI{30}{\pico\second} \\
+                    &= \boxy{\SI{16760}{\pico\second}}
+                \end{align*}
+                Stehen es nur Volladdierer zur Verfügung, dann braucht ein Ripple-Carry-Addiernetz insgesamt:
+                \begin{align*}
+                    T'_{\text{RC}} &= 240\times T_{\text{VA}} \\
+                    &=240 \times \SI{70}{\pico\second}\\
+                    &= \boxy{\SI{16800}{\pico\second}}
+                \end{align*}
+        \end{enumerate}
+    \item 
+        \begin{enumerate}
+            \item Die Funktionstafel für die gewünschte Schaltung ist gegeben durch:
+                \begin{equation*}
+                    \begin{tabu}{ccc|cc}
+                        \toprule
+                        p & x_1 & x_0 & y_1 & y_0 \\
+                        \midrule
+                        0 & 0 & 0 & D & D \\
+                        0 & 0 & 1 & D & D \\
+                        0 & 1 & 0 & D & D \\
+                        0 & 1 & 1 & D & D \\
+                        1 & 0 & 0 & 1 & 1 \\
+                        1 & 0 & 1 & 0 & 0 \\
+                        1 & 1 & 0 & 0 & 1 \\
+                        1 & 1 & 1 & 1 & 0 \\
+                        \bottomrule
+                    \end{tabu}
+                \end{equation*}
+            \item Da die Ausgänge der Schaltung für $p = 0$ egal sind, betrachten wir nur die untere Hälfte der Funktionstabelle und konstruieren die Schaltung so, dass die Schaltung immer das Predecessor liefert, egal $p = 0$ oder $p=1$ ist. Als boolsche Funktionen sind $y_0$ und $y_1$ somit gegeben durch:
+            \begin{align}
+                y_0 &= \bnot{x_1}\bnot{x_0} + x_1\bnot{x_0} = \bnot{x_0} \\
+                y_1 &= \bnot{x_1}\bnot{x_0} + x_1x_0
+            \end{align}
+            In einem Halbaddierer mit Eingänge $a$ und $b$ sind die Ausgänge $R$ und $U$ gegeben durch:
+            \begin{align}
+                R &= \bnot{a}b + a\bnot{b} \\
+                U &= ab 
+            \end{align}
+            Ist nun $a = \bnot{x_0}$ und $b = x_1$, dann gilt:
+            \begin{align}
+                R =  \bnot{\bnot{x_0}}x_1 + \bnot{x_0}\bnot{x_1}= \bnot{x_1}\bnot{x_0} + x_1x_0 = y_1
+            \end{align}
+            Wir benutzten nun den in Abbildung \ref{fig:ha} aus Teilaufgabe \ref{qn:ha} beschriebenen Halbaddierer mit der Schaltsymbol:
+            \begin{center}
+                \begin{tikzpicture}[circuit logic US, scale=0.9, every node/.style={scale=0.9},halfadder/.style={draw, minimum width=2cm,minimum height=1.5cm,
+                    label={[anchor=east]340:\textcolor{black!50}{$U$}},
+                    label={[anchor=east]20:\textcolor{black!50}{$R$}},
+                    label={[anchor=west]160:\textcolor{black!50}{$a$}},
+                    label={[anchor=west]200:\textcolor{black!50}{$b$}},
+                    }]
+
+                    \node[halfadder] (ha) at (0,0)  {\large HA};
+                \end{tikzpicture}
+            \end{center}
+            Die Predecessor-Funktion kann somit durch Halbaddierer und \texttt{NOT}-Gatter realisert werden:
+            \begin{center}
+                \begin{tikzpicture}[circuit logic US, scale=0.9, every node/.style={scale=0.9},halfadder/.style={draw, minimum width=2cm,minimum height=1.5cm,
+                    label={[anchor=east]340:\textcolor{black!50}{$U$}},
+                    label={[anchor=east]20:\textcolor{black!50}{$R$}},
+                    label={[anchor=west]160:\textcolor{black!50}{$a$}},
+                    label={[anchor=west]200:\textcolor{black!50}{$b$}},
+                    }] 
+
+                    \node[halfadder] (ha1) at (0,0)  {\large HA};
+                    \node[not gate,inputs={n}, point right] (not) at ($(ha1.west)+(-2,1)$) {};
+
+                    \draw[-MidcircleBig] (ha1.160)  -| ($(not.output)+(0.3,0)$);
+
+                    % labels
+                    \node[] (x0)   at ($(not.input)+(-2,0)$) {$x_0$};
+                    \node[] (pp)   at ($(x0)+(0,0.7)$) {$p$};
+                    \node[] (p)    at (pp) {$\hphantom{x_0}$};
+                    \node[] (x1)   at (x0 |- ha1.200) {$x_1$};
+
+                    \draw[] (p)  --++(0:1);
+                    \draw[] (x0) -- (not.input);
+                    \draw[] (x1) -- (ha1.200);
+
+                    \draw[] (ha1.340) --++(0:0.5);
+                    \draw[] (ha1.20)  --++(0:1.5) node[right] (y1) {$y_1$};
+                    \node[] (y0) at (not -| y1) {$y_0$};
+                    \draw[] (not.output) -- (y0);
+
+                    % Box
+                    \node[] (bottomright) at (x1 -| y1) {};
+                    \draw[dashed] ($(p)+(0.7,0.5)$) rectangle ($(bottomright)+(-0.7,-0.5)$);
+                \end{tikzpicture}
+            \end{center}
+            Wenn man aber unbedingt die $p$-Eingang benutzen wollen, dann kann die Predecessor-Funktion wie folgt realisert werden:
+            \begin{center}
+                \begin{tikzpicture}[circuit logic US, scale=0.9, every node/.style={scale=0.9},halfadder/.style={draw, minimum width=2cm,minimum height=1.5cm,
+                    label={[anchor=east]340:\textcolor{black!50}{$U$}},
+                    label={[anchor=east]20:\textcolor{black!50}{$R$}},
+                    label={[anchor=west]160:\textcolor{black!50}{$a$}},
+                    label={[anchor=west]200:\textcolor{black!50}{$b$}},
+                    }] 
+
+                    \node[halfadder] (ha1) at (0,0)  {\large HA1};
+                    \node[halfadder] (ha2) at (2.5,1.5)  {\large HA2};
+                    \node[not gate,inputs={n}, point right] (not) at ($(ha2.200)+(-3.8,0)$) {};
+
+                    \draw[]           (not.output) -- (ha2.200);
+                    \draw[-MidcircleBig] (ha1.160)    -| ($(not.output)+(0.3,0)$);
+
+                    % labels
+                    \node[] (x0)   at ($(not.input)+(-2,0)$) {$x_0$};
+                    \node[] (pp)   at (x0 |- ha2.160) {$p$};
+                    \node[] (p)    at (x0 |- ha2.160) {$\hphantom{x_0}$};
+                    \node[] (x1)  at (x0 |- ha1.200) {$x_1$};
+
+                    \draw[] (p)  -- (ha2.160);
+                    \draw[] (x0) -- (not.input);
+                    \draw[] (x1) -- (ha1.200);
+
+                    \draw[] (ha1.340) --++(0:0.5);
+                    \draw[] (ha2.20)  --++(0:0.5);
+                    \draw[] (ha1.20)  --++(0:4) node[right] (y1) {$y_1$};
+                    \node[] (y0) at (ha2.340 -| y1) {$y_0$};
+                    \draw[] (ha2.340) -- (y0);
+
+                    % Box
+                    \node[] (bottomright) at (x1 -| y1) {};
+                    \draw[dashed] ($(p)+(0.7,0.5)$) rectangle ($(bottomright)+(-0.7,-0.5)$);
+                \end{tikzpicture}
+            \end{center}
+            mit $y_0 = (p\land\bnot{x_0})$, was $\bnot{x_0}$ liefert für $p = 1$.
+
+        \end{enumerate}
+\end{enumerate}
