@@ -1,0 +1,38 @@
+\begin{enumerate}[label={[OH\arabic*]},start=14]
+    \item Wir gehen davon aus, dass der Student bei jeder Haltestelle sowieso umsteigen muss. Somit gibt es keinen Zeitvorteil, wenn er hintereinander die gleiche Transportmethode wählt. Jegliche Wartezeit wird auch vernachlässigt. Da man keine Nullen verwenden kann, füllen wir alle Felder, die uns egal sind, auch mit einem \texttt{-1}.
+
+    Gegeben seien die Fahrzeiten:
+    \begin{align}
+        T_\text{Tram} &= \SI{14}{\minute} \\
+        T_\text{Bus}  &=  \SI{7}{\minute} \\
+        T_\text{Fuß}  &= \SI{22}{\minute}
+    \end{align}    
+    Mit dem Bus ist also schneller als mit dem Tram, was weiterhin schneller als zu Fuß ist:
+        \begin{center}
+\vfill
+\newcommand*{\ye}{\cellcolor[HTML]{DDD9C3}}
+\newcommand*{\go}{\cellcolor[HTML]{D9D9D9}}
+\newcommand*{\gz}{\cellcolor[HTML]{7F7F7F}}
+\renewcommand*{\arraystretch}{1.5}
+\ttfamily
+
+\begin{tabular}{|
+>{\columncolor[HTML]{DDD9C3}}p{0.3cm}|
+>{\columncolor[HTML]{D9D9D9}}c *{9}{|c}|}
+ \hline
+ & \ye  & \ye      & \ye      & \ye      & \ye      & \ye      & \ye      & \ye      & \ye      & \ye      \\ \hline
+ &      & \go 12-T & \go 12-B & \go 12-F & \go 23-T & \go 23-B & \go 23-F & \go 3U-T & \go 3U-B & \go 3U-F \\ \hline
+ & 12-T &      -10 &     1000 &     1000 &       -1 &       -1 &       -1 &       -1 &       -1 &       -1 \\ \hline
+ & 12-B & \gz      &      -20 &     1000 &       -1 &       -1 &       -1 &       -1 &       -1 &       -1 \\ \hline
+ & 12-F & \gz      & \gz      &       -1 &       -1 &       -1 &       -1 &       -1 &       -1 &       -1 \\ \hline
+ & 23-T & \gz      & \gz      & \gz      &      -10 &     1000 &     1000 &       -1 &       -1 &       -1 \\ \hline
+ & 23-B & \gz      & \gz      & \gz      & \gz      &      -20 &     1000 &       -1 &       -1 &       -1 \\ \hline
+ & 23-F & \gz      & \gz      & \gz      & \gz      & \gz      &       -1 &       -1 &       -1 &       -1 \\ \hline
+ & 3U-T & \gz      & \gz      & \gz      & \gz      & \gz      & \gz      &      -10 &     1000 &     1000 \\ \hline
+ & 3U-B & \gz      & \gz      & \gz      & \gz      & \gz      & \gz      & \gz      &      -20 &     1000 \\ \hline
+ & 3U-F & \gz      & \gz      & \gz      & \gz      & \gz      & \gz      & \gz      & \gz      &       -1 \\ \hline
+\end{tabular}
+\vfill
+        \end{center}
+\end{enumerate}
+\newpage
