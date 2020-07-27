@@ -1,0 +1,36 @@
+1) Structural Hazards
+
+   Die Hardware ist nicht in der Lage, bestimmte Teilinstruktionen gleichzeitig auszu-
+   führen. Bei MIPS kommt das nicht vor, da die Architektur für das Pipelining konzipiert
+   würde. Es gibt z.B. keinen gleichzeitigen Lese- und Schreibzugriff auf ein Register. 
+
+2) Control Hazards
+   
+   Die Pipeline muss warten, ob ein bedingter Sprung ausgeführt werden muss.
+
+   Bsp:
+        beq     $t0, $t1, label
+        add     $t4, $t0, $t2
+
+        zu Beginn des add-Befehls ist der PC noch nicht bekannt. 
+        => Holen der nächsten Instruktion im folgenden Taktzyklus ist nicht möglich
+
+    Mögliche Lösungen:
+    - Einfügen von „Stalls“ (Warten) bis die Information bekannt sind. 
+    - Branchprediction (Sprungvorhersage). Hierbei wird spekulativ weitergerechnet, 
+      bis feststeht, ob sich die Vorhersage als richtig erwiesen hat. Im Falle einer
+      falschen vorhersage müssen die ausgeführten Befehle verworfen werden (Pipeline
+      Flush), was sehr viel Zeit kostet.
+
+3) Data Hazards
+   
+   Ein Befehl kann nicht ausgeführt werden, der die benötigten Daten noch nicht bereit-
+   stehen.
+
+   Bsp:
+        add     $t0, $t1, $t2
+        add     $t4, $t0, $t2
+
+        Das Register $t0 wird gelesen, obwohl es eine veralteten Inhalt besitzt. 
+
+   Mögliche Lösung: Einfügen von „Stalls“ (wie oben)
